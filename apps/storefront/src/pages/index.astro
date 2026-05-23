@@ -1,0 +1,194 @@
+---
+import { getCatalog, shlokas, formatPriceRange } from '@ghritam/commerce';
+import { getDB } from '../lib/db';
+import Layout from '../layouts/Layout.astro';
+import TopNav from '@ghritam/ui/TopNav.astro';
+import Footer from '@ghritam/ui/Footer.astro';
+import ShlokaBlock from '@ghritam/ui/ShlokaBlock.astro';
+import Placeholder from '@ghritam/ui/Placeholder.astro';
+import Button from '@ghritam/ui/Button.astro';
+import PhadFrieze from '@ghritam/ui/PhadFrieze.astro';
+
+// Edge-SSR: the static shell plus the live product grid from D1 (Phase 2).
+export const prerender = false;
+
+const products = await getCatalog(getDB(Astro.locals));
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+---
+
+<Layout title="Ghritam">
+  <TopNav active="Home" variant="minimal" />
+
+  {/* ── Hero — asymmetric: giant wordmark left, manifesto + shloka right ── */}
+  <section class="grid grid-cols-1 border-b border-ink lg:grid-cols-[1.2fr_1fr]">
+    <div class="border-b border-ink px-5 pb-10 pt-12 md:px-10 lg:border-b-0 lg:border-r lg:px-14 lg:pb-14 lg:pt-20">
+      <div class="mb-[18px] font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.3em">
+        Edition 001 · सर्वप्रथम
+      </div>
+      <div
+        class="font-serif italic text-ink"
+        style="font-size:clamp(56px,10vw,96px);line-height:1.02;letter-spacing:-0.02em">
+        Ghritam.
+      </div>
+      <div class="mt-3 font-dev text-accent" style="font-size:clamp(32px,5vw,44px)">घृतम्</div>
+      <p class="mt-[22px] max-w-[360px] font-serif italic text-ink-2" style="font-size:18px">
+        Four foods from the village. Whole, seasonal, unmodified — the way Bhārata
+        has eaten for a thousand years.
+      </p>
+    </div>
+
+    <div class="flex flex-col justify-between px-5 pb-10 pt-10 md:px-10 lg:px-14 lg:pb-14 lg:pt-20">
+      <div>
+        <p class="font-serif text-ink" style="font-size:clamp(20px,3.2vw,28px);line-height:1.35">
+          Real food is not consistent. It changes with the rain, the bee's mood,
+          the month of the year.
+        </p>
+        <p class="mt-6 font-serif italic text-ink lg:mt-8" style="font-size:clamp(20px,3.2vw,28px);line-height:1.35">
+          If Nature changes, so does your Natural product.
+        </p>
+        <ShlokaBlock shloka={shlokas.ayur} class="mt-6 border-t border-ink-3 pt-5 lg:mt-7 lg:pt-[22px]" />
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href="/philosophy" variant="solid">Read philosophy →</Button>
+        <Button href="/foods" variant="brown">Our product list</Button>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Terroir strip — Rajasthan + Himachal provenance ── */}
+  <section class="grid grid-cols-1 items-center gap-6 border-b border-ink bg-paper-2 px-5 py-8 md:px-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-10 lg:px-14 lg:py-[34px]">
+    <div class="flex items-center gap-5">
+      <svg
+        width="130" height="90" viewBox="0 0 130 90" fill="none" stroke="currentColor"
+        stroke-width="1.2" class="shrink-0 text-ink">
+        <path d="M0 74 Q 20 66, 40 70 T 80 72 T 130 68" />
+        <path d="M0 80 Q 30 74, 60 78 T 130 76" opacity="0.5" />
+        <path d="M50 62 V34 Q50 22 65 22 Q80 22 80 34 V62 Z" />
+        <path d="M56 62 V38 Q56 30 65 30 Q74 30 74 38 V62" opacity="0.6" />
+        <rect x="47" y="62" width="36" height="4" />
+        <path d="M45 66 L85 66 L82 72 L48 72 Z" opacity="0.4" />
+        <path d="M65 22 L65 14" />
+        <circle cx="65" cy="12" r="2" fill="currentColor" />
+        <circle cx="42" cy="58" r="1.5" fill="currentColor" opacity="0.5" />
+        <circle cx="88" cy="58" r="1.5" fill="currentColor" opacity="0.5" />
+        {
+          Array.from({ length: 12 }).map((_, i) => (
+            <circle cx={6 + i * 11} cy="86" r="1" fill="currentColor" opacity="0.55" />
+          ))
+        }
+      </svg>
+      <div>
+        <div class="font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.22em">
+          From the desert · राजस्थान
+        </div>
+        <div class="mt-0.5 font-serif italic" style="font-size:22px">
+          A remote village, a clay churn, a cow that knows her keeper.
+        </div>
+        <div class="mt-1 font-serif text-ink-2" style="font-size:13px">
+          Ghee set overnight in earthen pots, churned before the first light hits
+          the dunes.
+        </div>
+      </div>
+    </div>
+
+    <div class="px-2.5 text-center">
+      <div class="font-dev leading-none text-accent" style="font-size:34px">फ़र्श से</div>
+      <div class="mt-1 font-mono text-[9px] uppercase text-ink-3" style="letter-spacing:0.26em">
+        Sourced from the land
+      </div>
+    </div>
+
+    <div class="flex flex-row-reverse items-center justify-end gap-5 lg:flex-row">
+      <div class="text-left lg:text-right">
+        <div class="font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.22em">
+          From the hills · हिमाचल
+        </div>
+        <div class="mt-0.5 font-serif italic" style="font-size:22px">
+          A Pahadi orchard where snow still ripens the fruit.
+        </div>
+        <div class="mt-1 font-serif text-ink-2" style="font-size:13px">
+          Kinnauri kishmish and Kashmiri walnuts, sun-cured on the rooftop of a
+          kath-kuni house.
+        </div>
+      </div>
+      <svg
+        width="130" height="90" viewBox="0 0 130 90" fill="none" stroke="currentColor"
+        stroke-width="1.2" class="shrink-0 text-ink">
+        <path d="M0 72 L22 40 L36 56 L54 24 L76 56 L96 34 L130 72 Z" />
+        <path d="M48 30 L54 24 L60 30" stroke="currentColor" opacity="0.5" />
+        <path d="M90 38 L96 34 L102 38" stroke="currentColor" opacity="0.5" />
+        <path d="M30 72 L30 60 L48 60 L48 72 Z" />
+        <path d="M26 60 L52 60 L46 52 L32 52 Z" />
+        <rect x="37" y="64" width="4" height="8" fill="currentColor" opacity="0.3" />
+        <path d="M68 72 L68 64 M64 68 L68 62 L72 68 M62 72 L68 60 L74 72 Z" />
+        <path d="M82 72 L82 66 M79 70 L82 64 L85 70 M78 72 L82 62 L86 72 Z" opacity="0.7" />
+        <line x1="0" y1="72" x2="130" y2="72" />
+        {
+          Array.from({ length: 12 }).map((_, i) => (
+            <circle cx={6 + i * 11} cy="84" r="1" fill="currentColor" opacity="0.5" />
+          ))
+        }
+      </svg>
+    </div>
+  </section>
+
+  {/* ── Editorial grid of products ── */}
+  <section class="grid grid-cols-1 border-b border-ink sm:grid-cols-2 lg:grid-cols-4">
+    {
+      products.map((p, i) => (
+        <a
+          href={`/foods/${p.slug}`}
+          class:list={[
+            'group block border-b border-ink px-6 pb-6 pt-7 last:border-b-0 lg:border-b-0 lg:last:border-b-0',
+            i < 3 && 'lg:border-r lg:border-ink',
+          ]}>
+          <div class="mb-3.5 flex items-baseline justify-between">
+            <div class="font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.2em">
+              № {String(i + 1).padStart(2, '0')}
+            </div>
+            <div class="font-dev leading-none" style="font-size:32px">{p.dev}</div>
+          </div>
+          <Placeholder label={p.id} variant="light" class="h-[140px]" />
+          <div class="mt-3.5 font-serif italic leading-tight" style="font-size:22px">
+            {p.name}
+          </div>
+          <div class="mt-1.5 font-serif text-ink-2" style="font-size:13px">{p.origin}</div>
+          <div class="mt-4 flex items-baseline justify-between border-t border-ink pt-3">
+            <div class="font-serif" style="font-size:18px">{formatPriceRange(p)}</div>
+            <div
+              class="border-b border-ink font-mono text-xs uppercase group-hover:text-accent"
+              style="letter-spacing:0.14em">
+              Read ↗
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </section>
+
+  {/* ── Journal teaser ── */}
+  <section id="journal" class="grid grid-cols-1 gap-8 px-5 pb-8 pt-10 md:px-10 lg:grid-cols-2 lg:gap-14 lg:px-14 lg:pt-12">
+    <div>
+      <div class="mb-2.5 font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.22em">
+        From the journal
+      </div>
+      <div class="mb-3.5 font-serif italic leading-tight" style="font-size:clamp(22px,4vw,32px)">
+        If amla is only Vitamin C, why did nature bother with a tree?
+      </div>
+      <p class="font-serif text-ink-2" style="font-size:15px;line-height:1.55">
+        A short essay on why the lab has not — and perhaps cannot — replace what a
+        fruit does to a body. On terroir in the plant world, and the difference
+        between a nutrient and a meal.
+      </p>
+      <div
+        class="mt-3.5 inline-block border-b border-ink pb-0.5 font-mono text-xs uppercase"
+        style="letter-spacing:0.16em">
+        Continue reading · 7 min
+      </div>
+    </div>
+    <Placeholder label="orchard photograph" sublabel="full-bleed, b&w" class="h-[240px]" />
+  </section>
+
+  <PhadFrieze />
+  <Footer />
+</Layout>

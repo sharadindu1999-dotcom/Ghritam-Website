@@ -1,0 +1,109 @@
+---
+import { getCatalog, formatPriceRange } from '@ghritam/commerce';
+import { getDB } from '../../lib/db';
+import Layout from '../../layouts/Layout.astro';
+import TopNav from '@ghritam/ui/TopNav.astro';
+import Footer from '@ghritam/ui/Footer.astro';
+import Placeholder from '@ghritam/ui/Placeholder.astro';
+import Button from '@ghritam/ui/Button.astro';
+import PhadFrieze from '@ghritam/ui/PhadFrieze.astro';
+
+// Edge-SSR from the D1 catalog read-replica (Phase 2).
+export const prerender = false;
+
+const products = await getCatalog(getDB(Astro.locals));
+const count = String(products.length).padStart(2, '0');
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+
+// Phase 1: the filter / sort controls are static. They become interactive in
+// Phase 2 once the catalog is served from D1.
+const filters = ['All', 'Dairy', 'Apiary', 'Mountain', 'In season'];
+---
+
+<Layout title="Our Foods" description="Everything Ghritam carries, on one page.">
+  <TopNav active="Our Foods" variant="minimal" />
+
+  {/* ── Header strip ── */}
+  <header class="grid grid-cols-1 items-end gap-6 border-b border-ink px-5 pb-6 pt-8 md:px-10 lg:grid-cols-[2fr_1fr] lg:gap-10 lg:px-14 lg:pb-7 lg:pt-10">
+    <div>
+      <div class="mb-2.5 font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.3em">
+        The four · {count} items
+      </div>
+      <h1 class="font-serif italic" style="font-size:clamp(32px,6vw,52px);line-height:1;letter-spacing:-0.01em">
+        Everything we carry, on one page.
+      </h1>
+    </div>
+    <p class="font-serif text-ink-2" style="font-size:15px;line-height:1.55">
+      We don't plan to grow this list. A food gets in only when we have met the
+      family that makes it, and tasted the whole year's batches.
+    </p>
+  </header>
+
+  {/* ── Filter strip ── */}
+  <div
+    class="flex flex-wrap justify-between gap-x-6 gap-y-2 border-b border-ink px-5 py-3.5 font-mono text-xs uppercase md:px-10 lg:px-14"
+    style="letter-spacing:0.18em">
+    <div class="flex flex-wrap gap-x-[22px] gap-y-2">
+      {
+        filters.map((f) => (
+          <span class:list={[f === 'All' && 'border-b border-accent pb-0.5']}>{f}</span>
+        ))
+      }
+    </div>
+    <div class="flex gap-[22px] text-ink-3">
+      <span>Grid</span>
+      <span class="text-ink">List</span>
+      <span>Sort ↓</span>
+    </div>
+  </div>
+
+  {/* ── Editorial product rows ── */}
+  {
+    products.map((p, i) => (
+      <article class="grid grid-cols-1 items-start gap-5 border-b border-ink px-5 py-6 md:px-10 lg:grid-cols-[80px_280px_1fr_1fr_160px] lg:items-center lg:gap-6 lg:px-14 lg:py-7">
+        <div class="flex items-baseline justify-between lg:block">
+          <div class="font-mono text-sm uppercase text-ink-3" style="letter-spacing:0.18em">
+            № {String(i + 1).padStart(2, '0')}
+          </div>
+          <div class="font-dev leading-none text-accent lg:mt-1.5" style="font-size:36px">
+            {p.dev}
+          </div>
+        </div>
+        <a href={`/foods/${p.slug}`}>
+          <Placeholder label={p.id} class="h-[180px] lg:h-[120px]" />
+        </a>
+        <div>
+          <a
+            href={`/foods/${p.slug}`}
+            class="font-serif italic leading-tight hover:text-accent"
+            style="font-size:26px">
+            {p.name}
+          </a>
+          <div class="mt-1 font-serif text-ink-2" style="font-size:13px">
+            {p.origin}
+          </div>
+          <div
+            class="mt-2 font-mono text-[9px] uppercase text-ink-3"
+            style="letter-spacing:0.18em">
+            {p.variants[0]?.batch}
+          </div>
+        </div>
+        <div class="font-serif italic text-ink-2" style="font-size:14px;line-height:1.5">
+          "{p.note}"
+        </div>
+        <div class="flex items-end justify-between gap-4 lg:block lg:text-right">
+          <div>
+            <div class="font-serif" style="font-size:22px">{formatPriceRange(p)}</div>
+            <div class="mb-2 font-mono text-[9px] uppercase text-ink-3" style="letter-spacing:0.14em">
+              {p.variants.length === 1 ? p.variants[0]?.label : `${p.variants.length} sizes`}
+            </div>
+          </div>
+          <Button href={`/foods/${p.slug}`} variant="solid" class="lg:w-full">Add</Button>
+        </div>
+      </article>
+    ))
+  }
+
+  <PhadFrieze />
+  <Footer />
+</Layout>

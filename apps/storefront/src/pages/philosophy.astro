@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopNav from '@ghritam/ui/TopNav.astro';
+import Footer from '@ghritam/ui/Footer.astro';
+import PahadiFrieze from '@ghritam/ui/PahadiFrieze.astro';
+---
+
+<Layout
+  title="Philosophy"
+  description="Why we started Ghritam — a letter from the founder.">
+  <TopNav active="Philosophy" variant="minimal" />
+
+  {/* ── Header ── */}
+  <header class="px-5 pb-5 pt-10 text-center md:px-10 lg:px-40 lg:pt-[60px]">
+    <svg
+      width="260" height="44" viewBox="0 0 260 44" fill="none" stroke="currentColor"
+      stroke-width="1" class="mx-auto mb-3.5 text-ink opacity-85">
+      <path d="M0 36 L30 18 L50 28 L80 8 L120 30 L160 14 L200 30 L230 20 L260 36" />
+      <path d="M72 12 L80 8 L88 12" opacity="0.5" />
+      <path d="M154 18 L160 14 L166 18" opacity="0.5" />
+      <line x1="0" y1="36" x2="260" y2="36" />
+      <path d="M124 36 V28 Q124 24 130 24 Q136 24 136 28 V36 Z" />
+      <path d="M122 24 L138 24 L135 20 L125 20 Z" />
+      <circle cx="130" cy="18" r="1.4" fill="currentColor" />
+    </svg>
+    <div class="font-dev text-accent" style="font-size:clamp(28px,5vw,40px)">दर्शन</div>
+    <h1 class="mt-1.5 font-serif italic" style="font-size:clamp(32px,6vw,48px);line-height:1.1">
+      Why we started Ghritam.
+    </h1>
+    <div class="mt-3.5 font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.3em">
+      A letter from the founder · 4 min read
+    </div>
+  </header>
+
+  {/* ── Narrative body — single column, warm voice ── */}
+  <article
+    class="px-5 pb-10 font-serif text-ink md:px-12 lg:px-[200px]"
+    style="font-size:18px;line-height:1.7">
+    <p class="mb-4">
+      <span
+        class="float-left pr-2 font-dev text-accent"
+        style="font-size:54px;line-height:0.85">न</span>
+      amaste. If you are reading this, you probably already sense something is off
+      with the food on our shelves. It looks the same every week. It tastes the
+      same every month. It is quietly <em>fortified</em>, or <em>preserved</em>,
+      or — sometimes — simply adulterated.
+    </p>
+    <p class="mb-4">
+      Most food you can buy today has been modified. What is hard to find is food
+      in its natural form — inconsistent from batch to batch, changing with the
+      season, and yet still the best your body has ever known.
+    </p>
+    <p class="mb-4">
+      <strong>Ask yourself this:</strong> if food were only vitamins and minerals,
+      why would nature have given us this much diversity? So many fruits, so many
+      palates, so many smells? If amla were only <em>Vitamin C</em> and honey only
+      sucrose, a factory could have replaced the tree and the bee long ago. It has
+      not.
+    </p>
+    <p class="mb-4">
+      Your body is nature. It was not designed to be fed by a factory. It was
+      designed to be fed by a forest, a farm, a hive. And behind each of those is a
+      human — a farmer, a beekeeper, a villager — whose livelihood holds up the
+      food chain of this country.
+    </p>
+    <p class="mb-4">
+      Ghritam is our small attempt to bring those humans and their food into your
+      kitchen, unchanged. That is the whole idea.
+    </p>
+  </article>
+
+  <PahadiFrieze />
+  <Footer topRule />
+</Layout>
