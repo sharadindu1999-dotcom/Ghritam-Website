@@ -1,0 +1,27 @@
+---
+/**
+ * Brand wordmark — Devanagari + Latin + tagline.
+ * The seal logo was removed at the founder's request; branding is wordmark-only.
+ */
+interface Props {
+  devSize?: number;
+  href?: string | null;
+  class?: string;
+}
+const { devSize = 28, href = '/', class: className } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href ?? undefined}
+  class:list={['flex flex-col leading-none', className]}
+  aria-label="Ghritam"
+>
+  <span class="font-dev text-ink" style={`font-size:${devSize}px;letter-spacing:0.01em`}>घृतम्</span>
+  <span
+    class="mt-[5px] font-serif italic uppercase text-ink-2"
+    style="font-size:11px;letter-spacing:0.42em">Ghritam</span>
+  <span
+    class="mt-1 font-mono uppercase text-ink-3"
+    style="font-size:7.5px;letter-spacing:0.3em">पुरातन · शुद्ध · सात्त्विक</span>
+</Tag>

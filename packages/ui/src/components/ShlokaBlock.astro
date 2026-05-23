@@ -1,0 +1,36 @@
+---
+/**
+ * A Sanskrit citation block — Devanagari, IAST transliteration, English gloss
+ * and source. The source is part of the typography and is never omitted.
+ */
+interface Shloka {
+  dev: string;
+  translit: string;
+  trans: string;
+  source: string;
+}
+interface Props {
+  shloka: Shloka;
+  /** Optional fixed devanagari size in px. Defaults to a fluid clamp() so the
+   *  shloka shrinks on small screens without per-page overrides. */
+  devSize?: number | string;
+  class?: string;
+}
+const { shloka, devSize, class: className } = Astro.props;
+const devFontSize = devSize ? (typeof devSize === 'number' ? `${devSize}px` : devSize) : 'clamp(36px, 6vw, 52px)';
+---
+
+<div class:list={className}>
+  <div
+    class="font-dev leading-tight text-ink"
+    style={`font-size:${devFontSize};letter-spacing:-0.01em`}>
+    {shloka.dev}
+  </div>
+  <div class="mt-2.5 font-serif italic text-ink-2" style="font-size:17px">{shloka.translit}</div>
+  <p class="mt-2.5 max-w-[460px] font-serif italic text-ink-2" style="font-size:15px">
+    {shloka.trans}
+    <span class="ml-2 font-mono text-ink-3" style="font-size:9px;letter-spacing:0.18em">
+      — {shloka.source}
+    </span>
+  </p>
+</div>

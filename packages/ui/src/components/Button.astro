@@ -1,0 +1,33 @@
+---
+/**
+ * Manuscript button. Outlined by default; fills with ink/accent/brown on press.
+ * Renders an `<a>` when `href` is given, otherwise a `<button>`.
+ */
+interface Props {
+  href?: string;
+  variant?: 'outline' | 'solid' | 'accent' | 'brown';
+  type?: 'button' | 'submit';
+  class?: string;
+  /** Any extra attributes (aria-*, data-*, id, …) pass through to the element. */
+  [key: string]: unknown;
+}
+const { href, variant = 'outline', type = 'button', class: className, ...rest } = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 border px-[18px] py-2.5 font-mono text-sm uppercase tracking-wide cursor-pointer transition-colors';
+const variants = {
+  outline: 'border-ink text-ink bg-transparent hover:bg-ink hover:text-paper',
+  solid: 'border-ink bg-ink text-paper hover:bg-ink-2',
+  accent: 'border-ink bg-accent text-ink hover:bg-accent-deep hover:text-paper',
+  brown: 'border-brown-deep bg-brown text-paper hover:bg-brown-deep',
+};
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  type={href ? undefined : type}
+  class:list={[base, variants[variant], className]}
+>
+  <slot />
+</Tag>

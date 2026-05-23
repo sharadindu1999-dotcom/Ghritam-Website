@@ -1,0 +1,300 @@
+<style is:global>
+  @keyframes phad-lamp-flicker { 0%,100% { transform: scaleY(1); opacity: 0.95; } 50% { transform: scaleY(0.82); opacity: 1; } }
+  @keyframes phad-garland-sway { 0%,100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
+  .phad-lamp { transform-box: fill-box; transform-origin: 50% 100%; }
+  .phad-garland { transform-box: fill-box; transform-origin: 50% 0%; }
+</style>
+
+<div style="position:relative;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:#e9c978">
+  {/* Block-print border strip (top) */}
+  <div style="height:18px;border-bottom:1px solid #5a1a1a;background:#8a1a2a;overflow:hidden">
+    <svg width="100%" height="18" viewBox="0 0 1280 18" preserveAspectRatio="xMidYMid slice">
+      <g fill="#f4ead6">
+        {Array.from({length: 64}).map((_, i) => (
+          <g transform={`translate(${i*20+4} 3)`}>
+            <path d="M6 0 L12 6 L6 12 L0 6 Z" opacity="0.95" />
+            <circle cx="6" cy="6" r="1.6" fill="#8a1a2a" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  <div style="position:relative;padding:20px 0 0">
+    <div style="position:absolute;top:14px;left:0;right:0;text-align:center;pointer-events:none;z-index:2">
+      <div class="font-mono" style="font-size:10px;letter-spacing:0.3em;color:#5a1a1a">
+        फड़ चित्रकला · PHAD CHITRAKALA
+      </div>
+      <div class="font-serif" style="font-size:15px;font-style:italic;color:#3a1818;margin-top:2px">
+        A scroll narrative from Rajasthan — the land of our A2 desi ghee
+      </div>
+    </div>
+
+    <svg viewBox="0 0 1280 280" width="100%" height="280" preserveAspectRatio="xMidYMax slice" style="display:block;margin-top:50px">
+      <defs>
+        <pattern id="phadDots" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+          <circle cx="6" cy="6" r="1" fill="#8a1a2a" opacity="0.18" />
+        </pattern>
+      </defs>
+
+      <rect x="0" y="0" width="1280" height="280" fill="#e9c978" />
+      <rect x="0" y="0" width="1280" height="280" fill="url(#phadDots)" />
+
+      {/* Tree-of-life foliage strip along bottom */}
+      <path d="M0 250 Q 160 240 320 250 T 640 250 T 960 250 T 1280 250 L 1280 280 L 0 280 Z" fill="#2a6a3a" />
+      <path d="M0 250 Q 160 240 320 250 T 640 250 T 960 250 T 1280 250" stroke="#0a3a1a" stroke-width="1.2" fill="none" />
+      <g fill="#8a1a2a" stroke="#3a0a10" stroke-width="0.4">
+        {[80, 180, 280, 380, 480, 580, 680, 780, 880, 980, 1080, 1180].map((x, i) => (
+          <g transform={`translate(${x} 250)`}>
+            <path d="M-3 0 L 0 -10 L 3 0 Z" fill="#2a6a3a" stroke="#0a3a1a" stroke-width="0.6" />
+            <circle cx="0" cy="-12" r="3" />
+            <circle cx="-4" cy="-14" r="2" />
+            <circle cx="4" cy="-14" r="2" />
+            <circle cx="0" cy="-18" r="2" />
+          </g>
+        ))}
+      </g>
+
+      {/* Decorative arch / canopy top-center */}
+      <g transform="translate(640 60)">
+        <path d="M-220 40 Q -220 -10 -160 -10 L -120 -10 Q -100 -30 -80 -10 L -60 -10 Q -40 -30 -20 -10 L 0 -10 Q 20 -30 40 -10 L 60 -10 Q 80 -30 100 -10 L 120 -10 Q 140 -30 160 -10 L 200 -10 Q 220 -30 240 -10 Q 260 -10 260 40" fill="none" stroke="#5a1a1a" stroke-width="1.2" opacity="0.5" />
+      </g>
+
+      {/* ===== Central phad scene — RESERVED for commissioned artisan painting ===== */}
+
+      {/* Marigold toran (garland) swag across the top — preserved */}
+      <g class="phad-garland" style="animation:phad-garland-sway 4.6s ease-in-out infinite">
+        <path d="M200 54 Q 400 92 640 62 Q 880 92 1080 54" stroke="#5a1a1a" stroke-width="1.2" fill="none" />
+        {Array.from({length: 36}).map((_, i) => {
+          const t = i / 35;
+          let x, y;
+          if (t < 0.5) {
+            const k = t / 0.5;
+            x = (1-k)*(1-k)*200 + 2*(1-k)*k*420 + k*k*640;
+            y = (1-k)*(1-k)*54 + 2*(1-k)*k*92 + k*k*62;
+          } else {
+            const k = (t - 0.5) / 0.5;
+            x = (1-k)*(1-k)*640 + 2*(1-k)*k*860 + k*k*1080;
+            y = (1-k)*(1-k)*62 + 2*(1-k)*k*92 + k*k*54;
+          }
+          const isMarigold = i % 2 === 0;
+          return isMarigold ? (
+            <g transform={`translate(${x} ${y + 4})`}>
+              <circle cx="0" cy="0" r="4.2" fill="#f09030" stroke="#c05010" stroke-width="0.5" />
+              <circle cx="0" cy="0" r="2.8" fill="#f4b050" />
+              <circle cx="0" cy="0" r="1.2" fill="#c05010" />
+            </g>
+          ) : (
+            <g transform={`translate(${x} ${y + 6})`}>
+              <path d="M0 0 Q -2 -3 -1 -7 Q 1 -5 2 -1 Z" fill="#2a6a3a" stroke="#0a3a1a" stroke-width="0.4" />
+            </g>
+          );
+        })}
+      </g>
+
+      {/* ===== Ornate gilt frame reserving the painting ===== */}
+      <g transform="translate(640 170)">
+        {/* Outer rectangular gilt frame */}
+        <rect x="-300" y="-50" width="600" height="200" fill="#f4ead6" stroke="#8a4818" stroke-width="3" rx="2" />
+        {/* Inner dark border */}
+        <rect x="-292" y="-42" width="584" height="184" fill="none" stroke="#2a1008" stroke-width="1" />
+        {/* Inner cream panel with subtle paper-grain */}
+        <rect x="-282" y="-32" width="564" height="164" fill="#ede0c4" stroke="#c08848" stroke-width="1.2" />
+
+        {/* Corner flourishes — phad-style lotus quartered */}
+        {[
+          { tx: -282, ty: -32, rot: 0 },
+          { tx: 282, ty: -32, rot: 90 },
+          { tx: 282, ty: 132, rot: 180 },
+          { tx: -282, ty: 132, rot: 270 },
+        ].map((c, i) => (
+          <g transform={`translate(${c.tx} ${c.ty}) rotate(${c.rot})`}>
+            <path d="M0 0 Q 18 0 22 18 Q 22 4 8 0 Z" fill="#d9a43a" stroke="#5a1a1a" stroke-width="0.5" />
+            <path d="M0 0 Q 14 4 18 14 Q 14 4 0 6 Z" fill="#c83244" stroke="#5a1a1a" stroke-width="0.4" />
+            <circle cx="4" cy="4" r="2" fill="#d9a43a" stroke="#5a1a1a" stroke-width="0.4" />
+            <circle cx="4" cy="4" r="0.7" fill="#5a1a1a" />
+          </g>
+        ))}
+
+        {/* Top medallion with Devanagari title */}
+        <g transform="translate(0 -12)">
+          {/* Decorative bracket */}
+          <path d="M-220 0 Q -140 -12 -100 -6 Q -60 2 0 2 Q 60 2 100 -6 Q 140 -12 220 0" stroke="#8a4818" stroke-width="1" fill="none" />
+          <circle cx="-220" cy="0" r="2.2" fill="#8a4818" />
+          <circle cx="220" cy="0" r="2.2" fill="#8a4818" />
+          {/* Small flanking marigolds */}
+          <g transform="translate(-210 0)">
+            <circle r="3.5" fill="#f09030" stroke="#c05010" stroke-width="0.4" />
+            <circle r="2" fill="#f4b050" />
+            <circle r="0.8" fill="#c05010" />
+          </g>
+          <g transform="translate(210 0)">
+            <circle r="3.5" fill="#f09030" stroke="#c05010" stroke-width="0.4" />
+            <circle r="2" fill="#f4b050" />
+            <circle r="0.8" fill="#c05010" />
+          </g>
+        </g>
+
+        {/* Central Devanagari title — the painting's subject */}
+        <text x="0" y="24" text-anchor="middle" class="font-dev" font-size="32" fill="#3a0410" font-weight="500" letter-spacing="1">
+          यशोदा मैया · कृष्ण · नवनीत
+        </text>
+        {/* Transliteration */}
+        <text x="0" y="48" text-anchor="middle" class="font-serif" font-size="14" fill="#5a2810" font-style="italic">
+          Yaśodā Maiyā · Kṛṣṇa · Navanīta
+        </text>
+        {/* English translation */}
+        <text x="0" y="70" text-anchor="middle" class="font-serif" font-size="14" fill="#5a2810" font-style="italic">
+          "Yashoda Maa churns butter for little Krishna"
+        </text>
+
+        {/* Decorative lotus medallion in the middle */}
+        <g transform="translate(0 94)">
+          <g>
+            {Array.from({length: 12}).map((_, i) => (
+              <g transform={`rotate(${i * 30})`}>
+                <path d="M0 -14 Q 3 -8 0 -4 Q -3 -8 0 -14 Z" fill="#d9a43a" stroke="#5a1a1a" stroke-width="0.4" />
+              </g>
+            ))}
+          </g>
+          <g>
+            {Array.from({length: 12}).map((_, i) => (
+              <g transform={`rotate(${i * 30 + 15})`}>
+                <path d="M0 -9 Q 2 -5 0 -2 Q -2 -5 0 -9 Z" fill="#c83244" stroke="#5a1a1a" stroke-width="0.3" />
+              </g>
+            ))}
+          </g>
+          <circle r="3" fill="#d9a43a" stroke="#5a1a1a" stroke-width="0.5" />
+          <circle r="1.2" fill="#5a1a1a" />
+        </g>
+
+        {/* Bottom caption — commissioned note */}
+        <text x="0" y="126" text-anchor="middle" class="font-mono" font-size="8.5" fill="#8a4818" letter-spacing="3" text-decoration="">
+          COMMISSIONED PHAD CHITRAKALA · BHILWARA · TO BE PAINTED BY AN ARTISAN
+        </text>
+      </g>
+
+      {/* ===== Backdrop "scene holders" — framing context, not the art itself ===== */}
+      {/* Left: wooden churn (bilona) — symbolic object only, simplified */}
+      <g transform="translate(180 180)" opacity="0.55">
+        <ellipse cx="0" cy="60" rx="26" ry="4" fill="#4a2a10" />
+        <path d="M-24 50 Q -28 24 -18 8 Q 0 2 18 8 Q 28 24 24 50 Q 26 56 0 58 Q -26 56 -24 50 Z" fill="#8a4818" stroke="#2a0a04" stroke-width="0.8" />
+        <ellipse cx="0" cy="4" rx="14" ry="3.2" fill="#3a1a08" />
+        <rect x="-1" y="-60" width="2" height="64" fill="#6a3818" stroke="#3a2010" stroke-width="0.4" />
+        <circle cx="0" cy="-60" r="2" fill="#5a2818" />
+        <rect x="-7" y="-10" width="14" height="3" fill="#6a3818" stroke="#3a2010" stroke-width="0.4" />
+      </g>
+      <text x="180" y="258" text-anchor="middle" class="font-mono" font-size="7" fill="#8a4818" opacity="0.75" letter-spacing="2">
+        BILONA · मथनी
+      </text>
+
+      {/* Right: peacock feather + flute — symbolic of Krishna */}
+      <g transform="translate(1100 170)" opacity="0.55">
+        {/* Flute */}
+        <g transform="rotate(-20)">
+          <rect x="-32" y="-1.5" width="64" height="3" fill="#8a5a30" stroke="#3a2010" stroke-width="0.4" rx="1.5" />
+          <g fill="#3a2010">
+            <circle cx="-22" cy="0" r="0.7" /><circle cx="-14" cy="0" r="0.7" />
+            <circle cx="-6" cy="0" r="0.7" /><circle cx="2" cy="0" r="0.7" />
+            <circle cx="10" cy="0" r="0.7" /><circle cx="18" cy="0" r="0.7" />
+          </g>
+          <path d="M-32 -1.5 L -34 0 L -32 1.5 Z" fill="#5a3010" />
+          <path d="M32 -1.5 L 34 0 L 32 1.5 Z" fill="#5a3010" />
+          <path d="M26 -1.5 Q 32 -5 36 -7 Q 38 -4 34 -2" stroke="#c83244" stroke-width="0.8" fill="none" />
+        </g>
+        {/* Peacock feather */}
+        <g transform="translate(-8 -30) rotate(-14)">
+          <path d="M0 60 Q 3 30 0 0" stroke="#2a6a7a" stroke-width="1" fill="none" />
+          <ellipse cx="0" cy="0" rx="8" ry="12" fill="#2a6a7a" stroke="#0a2a3a" stroke-width="0.5" />
+          <ellipse cx="0" cy="0" rx="5" ry="8" fill="#4a8a9a" />
+          <ellipse cx="0" cy="0" rx="2.4" ry="4" fill="#d9a43a" />
+          <ellipse cx="0" cy="0" rx="1" ry="2" fill="#1a2a3a" />
+          <g stroke="#2a6a7a" stroke-width="0.4" fill="none" opacity="0.55">
+            {Array.from({length: 10}).map((_, i) => (
+              <g>
+                <path d={`M-3 ${12 + i*4} L -8 ${14 + i*4}`} />
+                <path d={`M3 ${12 + i*4} L 8 ${14 + i*4}`} />
+              </g>
+            ))}
+          </g>
+        </g>
+      </g>
+      <text x="1100" y="258" text-anchor="middle" class="font-mono" font-size="7" fill="#8a4818" opacity="0.75" letter-spacing="2">
+        MORPANKH · VENU
+      </text>
+
+      {/* ===== Four diya oil lamps flanking the scene ===== */}
+      <g>
+        {[{x:90, y:170}, {x:90, y:240}, {x:1190, y:170}, {x:1190, y:240}].map(({x, y}, i) => (
+          <g transform={`translate(${x} ${y})`}>
+            <path d="M-9 0 Q 0 5 9 0 L 7 5 Q 0 7 -7 5 Z" fill="#8a4020" stroke="#3a1808" stroke-width="0.5" />
+            <path d="M-7 0 Q 0 2 7 0 L 5 3 Q 0 4 -5 3 Z" fill="#f4d060" />
+            <path d="M0 -1 L 0 -5" stroke="#2a1008" stroke-width="0.7" />
+            <g class="phad-lamp" style={`animation:phad-lamp-flicker ${1.4 + i*0.25}s ease-in-out infinite`}>
+              <path d="M0 -5 Q -3 -9 0 -13 Q 3 -9 0 -5 Z" fill="#f09030" />
+              <path d="M0 -6 Q -1.5 -9 0 -12 Q 1.5 -9 0 -6 Z" fill="#f4d060" />
+            </g>
+            <circle cx="0" cy="-9" r="6" fill="#f4d060" opacity="0.2" />
+          </g>
+        ))}
+      </g>
+
+
+      {/* Decorative urns flanking */}
+      <g transform="translate(160 200)" fill="#8a1a2a" stroke="#5a1a1a" stroke-width="0.8">
+        <path d="M-14 0 L 14 0 L 10 20 Q 0 26 -10 20 Z" />
+        <rect x="-16" y="-4" width="32" height="4" />
+        <rect x="-10" y="-10" width="20" height="6" />
+        <circle cx="0" cy="-14" r="3" fill="#d9a43a" />
+      </g>
+      <g transform="translate(1120 200)" fill="#8a1a2a" stroke="#5a1a1a" stroke-width="0.8">
+        <path d="M-14 0 L 14 0 L 10 20 Q 0 26 -10 20 Z" />
+        <rect x="-16" y="-4" width="32" height="4" />
+        <rect x="-10" y="-10" width="20" height="6" />
+        <circle cx="0" cy="-14" r="3" fill="#d9a43a" />
+      </g>
+
+      {/* Peacocks on urns */}
+      <g transform="translate(160 186)">
+        <ellipse cx="0" cy="-8" rx="8" ry="6" fill="#2a6a7a" stroke="#1a3a4a" stroke-width="0.7" />
+        <circle cx="-5" cy="-12" r="3" fill="#2a6a7a" stroke="#1a3a4a" stroke-width="0.6" />
+        <path d="M-7 -14 L -9 -18" stroke="#1a3a4a" stroke-width="0.8" />
+        <circle cx="-9" cy="-18" r="0.8" fill="#d9a43a" />
+        <path d="M6 -12 Q 18 -24 22 -10 Q 18 -6 12 -6 Z" fill="#2a6a7a" stroke="#1a3a4a" stroke-width="0.6" />
+        <circle cx="16" cy="-14" r="1.4" fill="#d9a43a" />
+      </g>
+      <g transform="translate(1120 186)">
+        <ellipse cx="0" cy="-8" rx="8" ry="6" fill="#2a6a7a" stroke="#1a3a4a" stroke-width="0.7" />
+        <circle cx="5" cy="-12" r="3" fill="#2a6a7a" stroke="#1a3a4a" stroke-width="0.6" />
+        <path d="M7 -14 L 9 -18" stroke="#1a3a4a" stroke-width="0.8" />
+        <circle cx="9" cy="-18" r="0.8" fill="#d9a43a" />
+        <path d="M-6 -12 Q -18 -24 -22 -10 Q -18 -6 -12 -6 Z" fill="#2a6a7a" stroke="#1a3a4a" stroke-width="0.6" />
+        <circle cx="-16" cy="-14" r="1.4" fill="#d9a43a" />
+      </g>
+
+      {/* Lotus accents */}
+      <g fill="#f4ead6" stroke="#5a1a1a" stroke-width="0.6">
+        {[80, 240, 440, 640, 840, 1040, 1200].map((x, i) => (
+          <g transform={`translate(${x} 244)`}>
+            <path d="M0 0 L -5 -6 L 0 -10 L 5 -6 Z" fill="#8a1a2a" />
+            <circle cx="0" cy="-6" r="1.5" fill="#d9a43a" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  {/* Block-print border strip (bottom) */}
+  <div style="height:18px;border-top:1px solid #5a1a1a;background:#8a1a2a;overflow:hidden">
+    <svg width="100%" height="18" viewBox="0 0 1280 18" preserveAspectRatio="xMidYMid slice">
+      <g fill="#d9a43a">
+        {Array.from({length: 64}).map((_, i) => (
+          <g transform={`translate(${i*20+4} 3)`}>
+            <path d="M6 0 L12 6 L6 12 L0 6 Z" opacity="0.95" />
+            <circle cx="6" cy="6" r="1.6" fill="#8a1a2a" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+</div>

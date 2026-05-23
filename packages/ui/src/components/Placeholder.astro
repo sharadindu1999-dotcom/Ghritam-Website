@@ -1,0 +1,29 @@
+---
+/**
+ * Hatched placeholder — stands in for photography that does not exist yet.
+ * Size is set by the caller via `class` (e.g. `class="h-[140px]"`).
+ */
+interface Props {
+  label: string;
+  sublabel?: string;
+  variant?: 'default' | 'light' | 'dark' | 'accent';
+  class?: string;
+}
+const { label, sublabel, variant = 'default', class: className } = Astro.props;
+const variantClass = { default: '', light: 'ph-light', dark: 'ph-dark', accent: 'ph-accent' }[
+  variant
+];
+---
+
+<div class:list={['ph', variantClass, className]}>
+  <div>
+    <div>{label}</div>
+    {
+      sublabel && (
+        <div class="mt-1 opacity-60" style="font-size:9px;letter-spacing:0.08em">
+          {sublabel}
+        </div>
+      )
+    }
+  </div>
+</div>

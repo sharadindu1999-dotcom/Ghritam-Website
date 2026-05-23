@@ -1,0 +1,37 @@
+---
+import '../styles/app.css';
+import CartDrawer from '@ghritam/ui/CartDrawer.svelte';
+
+/**
+ * Page shell — the dark "library table" body with a 1280px paper sheet mounted
+ * on it. The design is a fixed 1280px desktop composition; the sheet is a flex
+ * column so footers settle to the bottom of short pages.
+ */
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'Four foods from the village — whole, seasonal, unmodified.' } =
+  Astro.props;
+const fullTitle = title === 'Ghritam' ? title : `${title} · Ghritam`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="bg-paper">
+    <div class="sheet mx-auto flex min-h-screen w-full max-w-[1280px] flex-col">
+      <slot />
+    </div>
+    <CartDrawer client:load />
+  </body>
+</html>

@@ -1,0 +1,475 @@
+<style is:global>
+  @keyframes pahadi-flag-ripple-1 { 0%,100% { transform: rotate(-3deg) translateY(0); } 50% { transform: rotate(3deg) translateY(1px); } }
+  @keyframes pahadi-flag-ripple-2 { 0%,100% { transform: rotate(2deg) translateY(1px); } 50% { transform: rotate(-2deg) translateY(-1px); } }
+  @keyframes pahadi-smoke { 0% { transform: translateY(0) scale(1); opacity: 0.55; } 100% { transform: translateY(-18px) scale(1.4); opacity: 0; } }
+  @keyframes pahadi-stream-ripple { 0%,100% { transform: translateX(0); } 50% { transform: translateX(1px); } }
+  @keyframes pahadi-cloud-drift { 0% { transform: translateX(0); } 100% { transform: translateX(-20px); } }
+  .pahadi-flag { transform-box: fill-box; transform-origin: 50% 0%; }
+  .pahadi-smoke { transform-box: fill-box; transform-origin: 50% 100%; }
+</style>
+
+<div style="position:relative;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:#d9e4ec">
+  {/* Top Pahadi-weave strip — Kinnauri topi border pattern */}
+  <div style="height:22px;background:#1a2a4a;display:flex;align-items:center;overflow:hidden">
+    <svg width="100%" height="22" viewBox="0 0 1280 22" preserveAspectRatio="xMidYMid slice">
+      <g>
+        {Array.from({length: 40}).map((_, i) => (
+          <g transform={`translate(${i*32} 0)`}>
+            <rect x="0" y="4" width="32" height="14" fill="#1a2a4a" />
+            <path d="M2 14 L 6 10 L 10 14 L 10 18 L 2 18 Z" fill="#2a7a4a" />
+            <path d="M12 10 L 16 6 L 20 10 L 20 18 L 12 18 Z" fill="#d9a43a" />
+            <path d="M22 14 L 26 10 L 30 14 L 30 18 L 22 18 Z" fill="#b2253b" />
+            <rect x="0" y="4" width="32" height="2" fill="#d9a43a" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  <div style="position:relative;padding:20px 0 0">
+    <div style="position:absolute;top:14px;left:0;right:0;text-align:center;pointer-events:none;z-index:2">
+      <div class="font-mono" style="font-size:10px;letter-spacing:0.3em;color:#1a2a4a">
+        कुल्लू नाटी · KULLU NATI
+      </div>
+      <div class="font-serif" style="font-size:15px;font-style:italic;color:#2a3a5a;margin-top:2px">
+        A Himachali round dance — the land that gives us our walnuts and kishmish
+      </div>
+    </div>
+
+    <svg viewBox="0 0 1280 300" width="100%" height="300" preserveAspectRatio="xMidYMax slice" style="display:block;margin-top:52px">
+      <defs>
+        <linearGradient id="pahadiSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#e6ecf0" />
+          <stop offset="100%" stop-color="#c9d6de" />
+        </linearGradient>
+        <pattern id="pineDots" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+          <circle cx="7" cy="7" r="0.8" fill="#1a2a4a" opacity="0.18" />
+        </pattern>
+      </defs>
+
+      <rect x="0" y="0" width="1280" height="300" fill="url(#pahadiSky)" />
+      <rect x="0" y="0" width="1280" height="300" fill="url(#pineDots)" />
+
+      <circle cx="1150" cy="60" r="28" fill="#f4ead6" opacity="0.9" />
+      <circle cx="1150" cy="60" r="20" fill="#e8b53a" opacity="0.6" />
+
+      {/* Distant mountains */}
+      <path d="M0 180 L 80 130 L 160 170 L 260 120 L 360 160 L 480 110 L 600 160 L 740 115 L 880 160 L 1020 118 L 1160 160 L 1280 130 L 1280 220 L 0 220 Z"
+        fill="#8ea8b8" opacity="0.85" />
+      {/* Near mountains + snow */}
+      <path d="M0 220 L 60 180 L 140 210 L 240 160 L 340 200 L 460 150 L 580 200 L 720 155 L 860 205 L 1000 160 L 1140 205 L 1280 175 L 1280 240 L 0 240 Z"
+        fill="#4a6a8a" />
+      <path d="M224 168 L 240 160 L 258 172 L 244 174 Z M 444 160 L 460 150 L 480 166 L 460 168 Z M 700 168 L 720 155 L 742 174 L 722 176 Z M 980 172 L 1000 160 L 1020 176 L 1002 180 Z"
+        fill="#f4f6f8" />
+      <path d="M0 240 L 120 220 L 280 238 L 440 222 L 600 240 L 780 224 L 940 240 L 1120 226 L 1280 240 L 1280 252 L 0 252 Z"
+        fill="#a8bec8" />
+
+      {/* Paragliders */}
+      <g transform="translate(160 50)">
+        <path d="M0 0 Q 28 -14 56 0 L 52 6 Q 28 -4 4 6 Z" fill="#b2253b" stroke="#1a2a4a" stroke-width="0.8" />
+        <path d="M4 6 L 26 28 M 52 6 L 30 28" stroke="#1a2a4a" stroke-width="0.6" />
+        <circle cx="28" cy="30" r="2" fill="#1a2a4a" />
+      </g>
+      <g transform="translate(260 32)">
+        <path d="M0 0 Q 30 -16 60 0 L 55 7 Q 30 -6 5 7 Z" fill="#2a7a4a" stroke="#1a2a4a" stroke-width="0.8" />
+        <path d="M5 7 L 28 32 M 55 7 L 32 32" stroke="#1a2a4a" stroke-width="0.6" />
+        <circle cx="30" cy="34" r="2" fill="#1a2a4a" />
+      </g>
+
+      {/* Pine trees */}
+      <g fill="#1a4a2a" stroke="#0a2a1a" stroke-width="0.6">
+        <g transform="translate(60 218)"><path d="M0 8 L -6 0 L -10 -8 L -6 -6 L -10 -14 L -4 -10 L -8 -20 L 0 -14 L 8 -20 L 4 -10 L 10 -14 L 6 -6 L 10 -8 L 6 0 Z" /></g>
+        <g transform="translate(380 222)"><path d="M0 8 L -6 0 L -10 -8 L -6 -6 L -10 -14 L -4 -10 L -8 -20 L 0 -14 L 8 -20 L 4 -10 L 10 -14 L 6 -6 L 10 -8 L 6 0 Z" /></g>
+        <g transform="translate(1120 222)"><path d="M0 8 L -6 0 L -10 -8 L -6 -6 L -10 -14 L -4 -10 L -8 -20 L 0 -14 L 8 -20 L 4 -10 L 10 -14 L 6 -6 L 10 -8 L 6 0 Z" /></g>
+        <g transform="translate(860 220)"><path d="M0 8 L -6 0 L -10 -8 L -6 -6 L -10 -14 L -4 -10 L -8 -20 L 0 -14 L 8 -20 L 4 -10 L 10 -14 L 6 -6 L 10 -8 L 6 0 Z" /></g>
+      </g>
+
+      {/* Grass */}
+      <path d="M0 252 Q 200 246 400 252 T 800 252 T 1280 252 L 1280 300 L 0 300 Z" fill="#3a6a4a" />
+      <path d="M0 254 Q 200 248 400 254 T 800 254 T 1280 254" stroke="#1a4a2a" stroke-width="1" fill="none" />
+
+      {/* Yaks */}
+      <g fill="#2a2118" opacity="0.9">
+        <g transform="translate(90 248)">
+          <path d="M0 6 L 3 2 L 8 0 L 16 0 L 22 -2 L 28 -2 L 32 2 L 32 8 L 28 12 L 24 18 L 20 18 L 20 12 L 12 12 L 8 18 L 4 18 L 4 12 L 0 12 Z" />
+          <path d="M22 -2 L 24 -6 M 28 -2 L 30 -6" stroke="#2a2118" stroke-width="0.8" />
+        </g>
+        <g transform="translate(128 250)" opacity="0.85">
+          <path d="M0 4 L 3 1 L 8 -1 L 16 -1 L 22 -3 L 26 -1 L 28 3 L 24 8 L 22 14 L 18 14 L 18 10 L 10 10 L 8 14 L 4 14 L 4 10 L 0 10 Z" />
+        </g>
+      </g>
+
+      {/* Kullu pagoda temple */}
+      <g transform="translate(1020 130)" stroke="#2a1a08" stroke-width="0.9">
+        <rect x="-6" y="114" width="112" height="10" fill="#8a6a4a" />
+        <rect x="0" y="104" width="100" height="10" fill="#6a4a2a" />
+        <rect x="36" y="104" width="28" height="4" fill="#aabac0" />
+        <rect x="34" y="108" width="32" height="4" fill="#aabac0" />
+        <rect x="32" y="112" width="36" height="4" fill="#aabac0" />
+        <rect x="22" y="60" width="56" height="44" fill="#c9955a" />
+        <rect x="20" y="60" width="60" height="3" fill="#5a3a1a" />
+        <rect x="20" y="74" width="60" height="2.4" fill="#5a3a1a" />
+        <rect x="20" y="88" width="60" height="2.4" fill="#5a3a1a" />
+        <rect x="20" y="102" width="60" height="3" fill="#5a3a1a" />
+        <rect x="42" y="80" width="16" height="24" fill="#2a1a08" />
+        <circle cx="50" cy="92" r="1.4" fill="#e8b53a" />
+        <path d="M12 60 L 36 38 L 64 38 L 88 60 Z" fill="#5a5a5a" />
+        <path d="M12 60 L 88 60 L 82 64 L 18 64 Z" fill="#3a3a3a" />
+        <rect x="34" y="24" width="32" height="14" fill="#c9955a" />
+        <path d="M26 24 L 42 10 L 58 10 L 74 24 Z" fill="#5a5a5a" />
+        <path d="M26 24 L 74 24 L 70 27 L 30 27 Z" fill="#3a3a3a" />
+        <rect x="47" y="-2" width="6" height="12" fill="#5a3a1a" />
+        <path d="M47 -2 L 50 -14 L 53 -2 Z" fill="#d9a43a" />
+        <circle cx="50" cy="-16" r="2" fill="#b2253b" />
+        <path d="M50 -20 L 50 -26" stroke="#2a1a08" stroke-width="0.8" />
+        <rect x="28" y="66" width="5" height="6" fill="#2a1a08" />
+        <rect x="67" y="66" width="5" height="6" fill="#2a1a08" />
+        <path d="M50 -14 Q 14 0 -16 28" stroke="#2a1a08" stroke-width="0.6" fill="none" />
+        <rect x="0" y="10" width="5" height="4" fill="#b2253b" />
+        <rect x="12" y="5" width="5" height="4" fill="#d9a43a" />
+        <rect x="24" y="2" width="5" height="4" fill="#2a7a4a" />
+        <rect x="36" y="-1" width="5" height="4" fill="#4a6a8a" />
+      </g>
+
+      {/* Apple tree */}
+      <g transform="translate(920 196)">
+        <rect x="18" y="28" width="6" height="48" fill="#5a3a1a" stroke="#2a1a08" stroke-width="0.8" />
+        <circle cx="22" cy="18" r="28" fill="#3a6a4a" stroke="#1a2a1a" stroke-width="0.8" />
+        <circle cx="6" cy="24" r="16" fill="#4a7a5a" stroke="#1a2a1a" stroke-width="0.8" />
+        <circle cx="38" cy="26" r="18" fill="#4a7a5a" stroke="#1a2a1a" stroke-width="0.8" />
+        <g fill="#b2253b" stroke="#1a2a1a" stroke-width="0.4">
+          <circle cx="4" cy="14" r="2" /><circle cx="16" cy="8" r="2" />
+          <circle cx="28" cy="12" r="2" /><circle cx="42" cy="18" r="2" />
+          <circle cx="10" cy="28" r="2" /><circle cx="26" cy="30" r="2" />
+          <circle cx="-2" cy="32" r="2" /><circle cx="38" cy="34" r="2" />
+          <circle cx="20" cy="22" r="2" />
+        </g>
+      </g>
+
+      {/* ===== Central Pahadi landscape — prayer flags, deodar grove, chalet, stupa, stream ===== */}
+
+      {/* ===== Drifting cloud banks behind everything ===== */}
+      <g style="animation:pahadi-cloud-drift 40s linear infinite" opacity="0.55">
+        <g fill="#f0e0c0">
+          <ellipse cx="280" cy="92" rx="38" ry="10" />
+          <ellipse cx="310" cy="88" rx="28" ry="9" />
+          <ellipse cx="255" cy="96" rx="24" ry="8" />
+        </g>
+        <g fill="#e4d4b0" opacity="0.85">
+          <ellipse cx="540" cy="78" rx="44" ry="11" />
+          <ellipse cx="580" cy="72" rx="30" ry="9" />
+          <ellipse cx="510" cy="82" rx="26" ry="8" />
+        </g>
+      </g>
+
+      {/* ===== Distant peaks layer — fills left-middle where figs were ===== */}
+      <g>
+        {/* Mid-range blue-grey peaks */}
+        <path d="M180 220 L 240 150 L 290 185 L 340 135 L 400 200 L 460 160 L 520 210 L 570 170 L 620 215 L 680 175 L 740 225 L 800 195 L 780 240 L 180 240 Z" fill="#7a8a9a" stroke="#3a4a5a" stroke-width="0.8" />
+        {/* Snow caps */}
+        <g fill="#f4f0e4" stroke="#8aa0b4" stroke-width="0.4">
+          <path d="M222 166 L 240 150 L 258 167 L 252 172 L 246 168 L 240 172 L 234 168 L 228 172 Z" />
+          <path d="M322 151 L 340 135 L 358 152 L 352 157 L 346 153 L 340 157 L 334 153 L 328 157 Z" />
+          <path d="M552 186 L 570 170 L 588 187 L 582 192 L 576 188 L 570 192 L 564 188 L 558 192 Z" />
+          <path d="M662 191 L 680 175 L 698 192 L 692 197 L 686 193 L 680 197 L 674 193 L 668 197 Z" />
+        </g>
+        {/* Mountain ridges/shading */}
+        <g stroke="#5a6a7a" stroke-width="0.5" fill="none" opacity="0.7">
+          <path d="M240 150 L 252 190 L 266 180" />
+          <path d="M340 135 L 355 185 L 368 175" />
+          <path d="M570 170 L 584 205 L 596 198" />
+          <path d="M680 175 L 694 210 L 706 203" />
+        </g>
+      </g>
+
+      {/* ===== Prayer flag string (Lungta) — animated ripple ===== */}
+      <g>
+        {/* Left post (deodar stick) */}
+        <path d="M208 200 L 208 262" stroke="#3a2010" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M206 198 L 210 202" stroke="#2a1408" stroke-width="1" />
+        {/* Right post */}
+        <path d="M780 210 L 780 262" stroke="#3a2010" stroke-width="2.5" stroke-linecap="round" />
+        {/* String */}
+        <path d="M208 200 Q 494 252 780 210" stroke="#5a3818" stroke-width="0.6" fill="none" />
+        {/* Flags — 5 colors cycle: blue, white, red, green, yellow (Tibetan order) */}
+        {(() => {
+          const flagColors = ['#3a6aaa', '#f4ead6', '#c83244', '#3a8a4a', '#e8b53a'];
+          const pts = 22;
+          return Array.from({length: pts}).map((_, i) => {
+            const t = (i + 0.5) / pts;
+            // Quadratic bezier for string: P0=(208,200) P1=(494,252) P2=(780,210)
+            const x = (1-t)*(1-t)*208 + 2*(1-t)*t*494 + t*t*780;
+            const y = (1-t)*(1-t)*200 + 2*(1-t)*t*252 + t*t*210 - 2;
+            const color = flagColors[i % 5];
+            const animDelay = (i * 0.15).toFixed(2);
+            const animDur = 2 + (i % 3) * 0.4;
+            return (
+              <g transform={`translate(${x.toFixed(1)} ${y.toFixed(1)})`}>
+              <g class="pahadi-flag" style={`animation:pahadi-flag-ripple-${(i % 2) + 1} ${animDur}s ease-in-out infinite;animation-delay:${animDelay}s`}>
+                <path d="M0 0 L 16 2 L 16 16 L 0 18 Z" fill={color} stroke="#2a1a08" stroke-width="0.3" />
+                {/* Sacred syllable dots */}
+                <g fill="#f4ead6" opacity="0.75">
+                  <circle cx="5" cy="7" r="0.7" /><circle cx="10" cy="7" r="0.7" />
+                  <circle cx="7" cy="11" r="0.7" />
+                </g>
+                {/* Fringe */}
+                <path d="M0 18 L 2 20 M 4 18 L 6 20 M 8 18 L 10 20 M 12 18 L 14 20" stroke="#2a1a08" stroke-width="0.4" />
+              </g></g>
+            );
+          });
+        })()}
+      </g>
+
+      {/* ===== Chorten/Stupa (white Buddhist shrine) ===== */}
+      <g transform="translate(270 182)">
+        {/* Tiered square base */}
+        <rect x="-24" y="66" width="48" height="12" fill="#e8e0d0" stroke="#3a2a18" stroke-width="0.7" />
+        <rect x="-20" y="58" width="40" height="8" fill="#f0e8d4" stroke="#3a2a18" stroke-width="0.7" />
+        <rect x="-16" y="50" width="32" height="8" fill="#e8e0d0" stroke="#3a2a18" stroke-width="0.7" />
+        {/* Red band */}
+        <rect x="-16" y="47" width="32" height="3" fill="#c83244" />
+        {/* Dome (bumpa) */}
+        <path d="M-14 47 Q -14 22 0 18 Q 14 22 14 47 Z" fill="#f4ead6" stroke="#3a2a18" stroke-width="0.9" />
+        <path d="M-14 47 Q 0 42 14 47" stroke="#8a6a4a" stroke-width="0.5" fill="none" />
+        {/* Eyes of Buddha */}
+        <g fill="#1a2a4a">
+          <ellipse cx="-4" cy="34" rx="1.2" ry="0.6" />
+          <ellipse cx="4" cy="34" rx="1.2" ry="0.6" />
+        </g>
+        <path d="M-5 37 Q 0 39 5 37" stroke="#1a2a4a" stroke-width="0.4" fill="none" />
+        {/* Spire with 13 rings */}
+        <rect x="-2" y="4" width="4" height="14" fill="#8a6a4a" stroke="#3a2a18" stroke-width="0.5" />
+        {[6,8,10,12,14,16].map(y => <rect x="-3" y={y} width="6" height="1" fill="#d9a43a" />)}
+        {/* Top umbrella */}
+        <path d="M-6 4 Q 0 -2 6 4 Z" fill="#d9a43a" stroke="#3a2a18" stroke-width="0.5" />
+        <path d="M0 -2 L 0 -8" stroke="#3a2a18" stroke-width="0.8" />
+        <path d="M-2 -8 Q 0 -12 2 -8 Z" fill="#c83244" stroke="#3a2a18" stroke-width="0.4" />
+        {/* Sun+moon finial */}
+        <circle cx="0" cy="-14" r="1.4" fill="#d9a43a" />
+        <path d="M-2 -14 Q 0 -17 2 -14 Q 0 -16 -2 -14" fill="#f4ead6" />
+      </g>
+
+      {/* ===== Deodar grove (tall cedar cones) — left of center ===== */}
+      <g>
+        {[
+          {x: 370, h: 92, s: 1.0},
+          {x: 400, h: 72, s: 0.88},
+          {x: 432, h: 100, s: 1.05},
+          {x: 462, h: 68, s: 0.82},
+        ].map((t, i) => (
+          <g transform={`translate(${t.x} ${254 - t.h})`}>
+            {/* Trunk */}
+            <rect x="-2" y={t.h - 18} width="4" height="18" fill="#3a2010" stroke="#1a0a04" stroke-width="0.4" />
+            {/* Drooping deodar tiers (Himalayan cedar signature) */}
+            <g fill="#2a5a32" stroke="#0a3a14" stroke-width="0.5">
+              <path d={`M0 0 L -${10*t.s} ${14*t.s} L -${6*t.s} ${14*t.s} L -${12*t.s} ${26*t.s} L -${7*t.s} ${26*t.s} L -${14*t.s} ${38*t.s} L -${8*t.s} ${38*t.s} L -${16*t.s} ${52*t.s} L -${9*t.s} ${52*t.s} L -${18*t.s} ${66*t.s} L ${18*t.s} ${66*t.s} L ${9*t.s} ${52*t.s} L ${16*t.s} ${52*t.s} L ${8*t.s} ${38*t.s} L ${14*t.s} ${38*t.s} L ${7*t.s} ${26*t.s} L ${12*t.s} ${26*t.s} L ${6*t.s} ${14*t.s} L ${10*t.s} ${14*t.s} Z`} />
+            </g>
+            {/* Highlights on sun-side */}
+            <g stroke="#4a7a5a" stroke-width="0.5" fill="none" opacity="0.6">
+              <path d={`M${2*t.s} ${10*t.s} L ${6*t.s} ${14*t.s}`} />
+              <path d={`M${3*t.s} ${22*t.s} L ${10*t.s} ${26*t.s}`} />
+              <path d={`M${4*t.s} ${34*t.s} L ${12*t.s} ${38*t.s}`} />
+            </g>
+            {/* Tip */}
+            <path d={`M-2 2 L 0 -4 L 2 2`} fill="#2a5a32" stroke="#0a3a14" stroke-width="0.4" />
+          </g>
+        ))}
+      </g>
+
+      {/* ===== Kath-kuni chalet (wooden-stone Himachali cottage) ===== */}
+      <g transform="translate(560 198)">
+        {/* Stone base */}
+        <rect x="-32" y="40" width="64" height="16" fill="#7a6a5a" stroke="#2a1a08" stroke-width="0.7" />
+        {/* Stone courses */}
+        <g stroke="#3a2a18" stroke-width="0.4" fill="none">
+          <path d="M-32 44 L 32 44" /><path d="M-32 48 L 32 48" /><path d="M-32 52 L 32 52" />
+          <path d="M-20 40 L -20 44 M -8 44 L -8 48 M 4 48 L 4 52 M 16 40 L 16 44 M -14 48 L -14 52 M 20 48 L 20 52 M 8 40 L 8 44" />
+        </g>
+        {/* Dedar wood wall with horizontal courses (kath-kuni signature interlocking) */}
+        <rect x="-30" y="14" width="60" height="26" fill="#8a5830" stroke="#2a1a08" stroke-width="0.8" />
+        <g stroke="#2a1a08" stroke-width="0.5" fill="none">
+          <path d="M-30 18 L 30 18" />
+          <path d="M-30 22 L 30 22" />
+          <path d="M-30 26 L 30 26" />
+          <path d="M-30 30 L 30 30" />
+          <path d="M-30 34 L 30 34" />
+        </g>
+        {/* Carved door */}
+        <rect x="-6" y="24" width="12" height="16" fill="#2a1408" stroke="#0a0402" stroke-width="0.5" />
+        <path d="M-6 28 L 6 28" stroke="#5a3818" stroke-width="0.4" />
+        <circle cx="4" cy="32" r="0.7" fill="#d9a43a" />
+        {/* Windows with shutters */}
+        <g>
+          <rect x="-22" y="22" width="8" height="8" fill="#3a2818" stroke="#1a0a04" stroke-width="0.4" />
+          <rect x="-22" y="22" width="4" height="8" fill="#8a1a2a" />
+          <rect x="-18" y="22" width="4" height="8" fill="#8a1a2a" />
+          <path d="M-22 26 L -14 26 M -18 22 L -18 30" stroke="#d9a43a" stroke-width="0.4" />
+        </g>
+        <g>
+          <rect x="14" y="22" width="8" height="8" fill="#3a2818" stroke="#1a0a04" stroke-width="0.4" />
+          <rect x="14" y="22" width="4" height="8" fill="#8a1a2a" />
+          <rect x="18" y="22" width="4" height="8" fill="#8a1a2a" />
+          <path d="M14 26 L 22 26 M 18 22 L 18 30" stroke="#d9a43a" stroke-width="0.4" />
+        </g>
+        {/* Slate pitched roof */}
+        <path d="M-36 14 L 0 -10 L 36 14 Z" fill="#4a4a52" stroke="#1a1a1a" stroke-width="0.8" />
+        {/* Slate tile rows */}
+        <g stroke="#2a2a30" stroke-width="0.4" fill="none">
+          <path d="M-30 10 L 30 10" />
+          <path d="M-24 6 L 24 6" />
+          <path d="M-18 2 L 18 2" />
+          <path d="M-12 -2 L 12 -2" />
+          <path d="M-6 -6 L 6 -6" />
+        </g>
+        {/* Roof overhang */}
+        <path d="M-36 14 L 36 14 L 32 16 L -32 16 Z" fill="#3a3a42" stroke="#1a1a1a" stroke-width="0.5" />
+        {/* Chimney with smoke */}
+        <rect x="10" y="-6" width="5" height="10" fill="#4a3020" stroke="#1a0a04" stroke-width="0.4" />
+        <g class="pahadi-smoke" style="animation:pahadi-smoke 3s ease-out infinite">
+          <ellipse cx="12.5" cy="-8" rx="3" ry="2" fill="#e4dccc" opacity="0.6" />
+        </g>
+        <g class="pahadi-smoke" style="animation:pahadi-smoke 3s ease-out infinite;animation-delay:1s">
+          <ellipse cx="12.5" cy="-8" rx="3.5" ry="2.5" fill="#e4dccc" opacity="0.55" />
+        </g>
+        <g class="pahadi-smoke" style="animation:pahadi-smoke 3s ease-out infinite;animation-delay:2s">
+          <ellipse cx="12.5" cy="-8" rx="3" ry="2" fill="#e4dccc" opacity="0.5" />
+        </g>
+        {/* Carved bracket detail under eave */}
+        <g fill="#d9a43a" stroke="#2a1a08" stroke-width="0.3">
+          <path d="M-30 14 L -28 16 L -26 14 Z" /><path d="M-20 14 L -18 16 L -16 14 Z" />
+          <path d="M-10 14 L -8 16 L -6 14 Z" /><path d="M0 14 L 2 16 L 4 14 Z" />
+          <path d="M10 14 L 12 16 L 14 14 Z" /><path d="M20 14 L 22 16 L 24 14 Z" />
+          <path d="M28 14 L 30 16 L 28 14 Z" />
+        </g>
+      </g>
+
+      {/* ===== Mountain stream cascading into the valley ===== */}
+      <g>
+        <path d="M640 170 Q 650 190 660 210 Q 670 230 680 254" stroke="#8ab8c8" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.85" />
+        <path d="M640 170 Q 650 190 660 210 Q 670 230 680 254" stroke="#f4ead6" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.9" />
+        {/* Stream ripple lines */}
+        <g stroke="#4a88a4" stroke-width="0.5" fill="none" opacity="0.7">
+          <path d="M644 180 L 650 182" />
+          <path d="M650 198 L 658 200" />
+          <path d="M660 218 L 668 220" />
+          <path d="M670 236 L 678 238" />
+        </g>
+        {/* Rocks at base */}
+        <g fill="#6a6a72" stroke="#2a2a32" stroke-width="0.5">
+          <ellipse cx="672" cy="250" rx="6" ry="2.5" />
+          <ellipse cx="686" cy="252" rx="5" ry="2" />
+          <ellipse cx="660" cy="252" rx="4" ry="1.5" />
+        </g>
+        <g fill="#8a8a92" opacity="0.5">
+          <ellipse cx="672" cy="248" rx="3" ry="1" />
+        </g>
+      </g>
+
+      {/* ===== Terraced fields on a hillside ===== */}
+      <g transform="translate(730 210)">
+        <g fill="#a8b860" stroke="#5a6830" stroke-width="0.5">
+          <path d="M0 0 L 50 -4 L 46 4 L -4 6 Z" />
+          <path d="M-6 10 L 52 8 L 48 16 L -10 18 Z" />
+          <path d="M-12 22 L 54 20 L 50 28 L -16 30 Z" />
+          <path d="M-18 34 L 56 32 L 52 40 L -22 42 Z" />
+        </g>
+        {/* Crop marks */}
+        <g fill="#7a9030" opacity="0.8">
+          {[
+            [4,0],[14,-1],[24,-2],[34,-3],[44,-4],
+            [0,10],[12,10],[24,9],[36,9],[48,8],
+            [-4,22],[10,22],[22,21],[36,21],[50,20],
+            [-10,34],[4,34],[20,33],[36,33],[52,32],
+          ].map(([x,y], i) => (
+            <circle cx={x} cy={y+2} r="0.9" />
+          ))}
+        </g>
+        {/* Grass tufts at field edge */}
+        <g stroke="#3a5a18" stroke-width="0.5" fill="none">
+          <path d="M-4 6 L -4 9 M -6 7 L -6 10 M 46 4 L 46 7 M 48 5 L 48 8" />
+          <path d="M-10 18 L -10 21 M 48 16 L 48 19" />
+        </g>
+      </g>
+
+      {/* ===== Himalayan honeybee hive hanging from tree (ties to our forest honey story) ===== */}
+      <g transform="translate(500 150)">
+        {/* Branch */}
+        <path d="M-14 0 Q 0 -4 14 0" stroke="#3a2010" stroke-width="1.2" fill="none" />
+        {/* Hive comb (Apis dorsata — signature crescent hive) */}
+        <path d="M-8 2 Q -12 14 -6 26 Q 0 28 6 26 Q 12 14 8 2 Q 0 0 -8 2 Z" fill="#d9a43a" stroke="#5a3a10" stroke-width="0.6" />
+        {/* Comb cells */}
+        <g stroke="#5a3a10" stroke-width="0.3" fill="none" opacity="0.8">
+          <path d="M-6 6 L 6 6" /><path d="M-7 10 L 7 10" />
+          <path d="M-8 14 L 8 14" /><path d="M-7 18 L 7 18" />
+          <path d="M-6 22 L 6 22" />
+        </g>
+        <g fill="#f4d060">
+          {[[-4,8],[0,8],[4,8],[-5,12],[-1,12],[3,12],[-4,16],[0,16],[4,16],[-3,20],[1,20]].map(([x,y], i) => (
+            <circle cx={x} cy={y} r="0.7" />
+          ))}
+        </g>
+        {/* Bee silhouettes nearby */}
+        <g fill="#2a1a08">
+          <ellipse cx="14" cy="8" rx="1.4" ry="0.8" />
+          <ellipse cx="18" cy="14" rx="1.4" ry="0.8" />
+          <ellipse cx="-14" cy="20" rx="1.4" ry="0.8" />
+        </g>
+        {/* Wings */}
+        <g fill="#f4ead6" opacity="0.7">
+          <ellipse cx="13" cy="7" rx="1.4" ry="0.5" />
+          <ellipse cx="17" cy="13" rx="1.4" ry="0.5" />
+          <ellipse cx="-15" cy="19" rx="1.4" ry="0.5" />
+        </g>
+      </g>
+
+      {/* ===== Sun disc ===== */}
+      <g transform="translate(120 80)">
+        <circle cx="0" cy="0" r="14" fill="#f4d060" opacity="0.25" />
+        <circle cx="0" cy="0" r="9" fill="#f4a430" stroke="#c06818" stroke-width="0.7" />
+        <circle cx="0" cy="0" r="6" fill="#f4d060" />
+        {/* Rays */}
+        <g stroke="#c06818" stroke-width="0.8" stroke-linecap="round" opacity="0.85">
+          {[0,30,60,90,120,150,180,210,240,270,300,330].map(a => (
+            <line x1={Math.cos(a*Math.PI/180)*12} y1={Math.sin(a*Math.PI/180)*12}
+                  x2={Math.cos(a*Math.PI/180)*17} y2={Math.sin(a*Math.PI/180)*17} />
+          ))}
+        </g>
+      </g>
+
+
+      {/* Rhododendron flowers on grass */}
+      <g>
+        {[180, 420, 680, 880].map((x, idx) => (
+          <g transform={`translate(${x} 270)`}>
+            <g fill="#b2253b" stroke="#8a1a2a" stroke-width="0.3">
+              <circle cx="0" cy="-2" r="2" />
+              <circle cx="-2" cy="0" r="2" />
+              <circle cx="2" cy="0" r="2" />
+              <circle cx="-1" cy="-4" r="1.5" />
+              <circle cx="1" cy="-4" r="1.5" />
+            </g>
+            <circle cx="0" cy="-2" r="0.8" fill="#d9a43a" />
+            <path d="M0 0 L 0 6" stroke="#1a4a22" stroke-width="0.7" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  {/* Bottom Pahadi weave strip */}
+  <div style="height:22px;background:#b2253b;display:flex;align-items:center;overflow:hidden;border-top:1px solid #5a1a1a">
+    <svg width="100%" height="22" viewBox="0 0 1280 22" preserveAspectRatio="xMidYMid slice">
+      <g>
+        {Array.from({length: 40}).map((_, i) => (
+          <g transform={`translate(${i*32} 0)`}>
+            <rect x="0" y="4" width="32" height="14" fill="#b2253b" />
+            <path d="M2 8 L 6 4 L 10 8 L 10 18 L 2 18 Z" fill="#1a2a4a" />
+            <path d="M12 4 L 16 0 L 20 4 L 20 18 L 12 18 Z" fill="#f4ead6" />
+            <path d="M22 8 L 26 4 L 30 8 L 30 18 L 22 18 Z" fill="#2a7a4a" />
+            <rect x="0" y="18" width="32" height="2" fill="#d9a43a" />
+          </g>
+        ))}
+      </g>
+    </svg>
+  </div>
+</div>
