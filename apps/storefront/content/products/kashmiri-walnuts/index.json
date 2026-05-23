@@ -1,0 +1,20 @@
+{
+  "name": "Kashmiri Walnuts",
+  "handle": "akhrot",
+  "dev": "अक्षोट",
+  "category": "mountain",
+  "origin": "Shelled in the valleys of Shopian",
+  "story": "Thin-shelled walnuts from old, rain-fed trees — never irrigated, never forced. Shelled by hand in winter, so a few halves come whole and a few come broken.",
+  "note": "Bitter-sweet and oily — the way the mountain makes them.",
+  "inSeason": false,
+  "shlokaKey": "annam",
+  "maker": {
+    "name": "The Bhat family",
+    "place": "Shopian, Kashmir",
+    "blurb": "Custodians of walnut trees older than anyone living. Ghritam pays per tree, not per kilo, so a lean year still pays for the family's winter."
+  },
+  "badges": ["Rain-fed trees", "Hand-shelled", "Cold-stored"],
+  "variants": [
+    { "sku": "WALNUT-500", "label": "500 g halves", "price": 880, "batch": "Batch no. 019 · Autumn harvest", "stock": 21 }
+  ]
+}

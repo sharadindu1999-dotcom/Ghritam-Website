@@ -1,0 +1,37 @@
+{
+  "name": "A2 Bilona Ghee",
+  "handle": "ghee",
+  "dev": "घृत",
+  "category": "dairy",
+  "origin": "From Gir cows, hand-churned in Gujarat",
+  "story": "Made the bilona way — curd set overnight, churned by hand until butter rises, then simmered until the room smells of temple. What you receive is granular, golden, and deeply scented of the barn it came from.",
+  "note": "No two jars will smell the same — that is how you know.",
+  "inSeason": true,
+  "shlokaKey": "ayur",
+  "maker": {
+    "name": "The Patel family",
+    "place": "Gir, Gujarat",
+    "blurb": "Three generations of gwalas who still churn before sunrise, by hand, in a clay-pot bilona. When Ghritam pays them, it is without a middleman — the full price reaches their home."
+  },
+  "badges": [
+    "A2 Gir cows",
+    "Hand-churned",
+    "Unpasteurised"
+  ],
+  "variants": [
+    {
+      "sku": "GHEE-500",
+      "label": "500 ml",
+      "price": 1480,
+      "batch": "Batch no. 047 · Kārtika 2025",
+      "stock": 24
+    },
+    {
+      "sku": "GHEE-1000",
+      "label": "1 litre",
+      "price": 2760,
+      "batch": "Batch no. 047 · Kārtika 2025",
+      "stock": 11
+    }
+  ]
+}

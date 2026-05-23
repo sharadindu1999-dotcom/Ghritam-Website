@@ -1,0 +1,21 @@
+{
+  "name": "Raw Forest Honey",
+  "handle": "honey",
+  "dev": "मधु",
+  "category": "apiary",
+  "origin": "Wild-harvested, Sundarban beekeepers",
+  "story": "Gathered from wild Apis dorsata combs in the mangrove forest, strained once and never heated. It carries the flower of its month — so a winter jar and a spring jar are not the same honey.",
+  "note": "Crystallises in winter. This is a sign of life, not fault.",
+  "inSeason": true,
+  "shlokaKey": "annam",
+  "maker": {
+    "name": "The Sundarban mouli cooperative",
+    "place": "Sundarban, West Bengal",
+    "blurb": "Honey-hunters who enter the forest by boat and read the bees the old way. Ghritam buys the whole season at a fair, fixed price so a thin month does not become a hungry one."
+  },
+  "badges": ["Wild-harvested", "Single-strain", "Never heated"],
+  "variants": [
+    { "sku": "HONEY-350", "label": "350 g", "price": 640, "batch": "Batch no. 012 · Spring flow", "stock": 40 },
+    { "sku": "HONEY-700", "label": "700 g", "price": 1180, "batch": "Batch no. 012 · Spring flow", "stock": 18 }
+  ]
+}

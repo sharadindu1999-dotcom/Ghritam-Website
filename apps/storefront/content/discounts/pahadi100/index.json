@@ -1,0 +1,10 @@
+{
+  "type": "flat",
+  "value": 100,
+  "minOrder": 800,
+  "appliesTo": "mountain",
+  "validFrom": "2026-01-01",
+  "validTo": "2026-12-31",
+  "usageCap": 200,
+  "active": true
+}

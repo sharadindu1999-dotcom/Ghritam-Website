@@ -1,0 +1,21 @@
+{
+  "name": "Kinnaur Kishmish",
+  "handle": "kishmish",
+  "dev": "द्राक्षा",
+  "category": "mountain",
+  "origin": "Sun-dried in the orchards of Kinnaur",
+  "story": "Grapes laid out on rooftops to dry under the high mountain sun, turned by hand. The black and the brown are different vines, different sugars — pick the one your kitchen prefers.",
+  "note": "Pips in. Seeds removed by hand, where nature allowed.",
+  "inSeason": false,
+  "shlokaKey": "ahimsa",
+  "maker": {
+    "name": "The Negi family orchard",
+    "place": "Kalpa, Kinnaur, Himachal Pradesh",
+    "blurb": "A Pahadi family whose terraced vines sit above the Sutlej. The whole year's drying is done on their own roof, and the whole year's crop comes to Ghritam."
+  },
+  "badges": ["Sun-dried", "No added sugar", "Unsulphured"],
+  "variants": [
+    { "sku": "KISH-BLACK-400", "label": "Black · 400 g", "price": 520, "batch": "Batch no. 003 · Autumn harvest", "stock": 33 },
+    { "sku": "KISH-BROWN-400", "label": "Brown · 400 g", "price": 480, "batch": "Batch no. 004 · Autumn harvest", "stock": 29 }
+  ]
+}

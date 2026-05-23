@@ -1,0 +1,32 @@
+{
+  "brandDev": "घृतम्",
+  "brandLatin": "Ghritam",
+  "tagline": "पुरातन · शुद्ध · सात्त्विक",
+  "currency": "₹",
+  "accent": "saffron",
+  "heroEdition": "Edition 001 · सर्वप्रथम",
+  "heroIntro": "Four foods from the village. Whole, seasonal, unmodified — the way Bhārata has eaten for a thousand years.",
+  "shlokas": [
+    {
+      "key": "annam",
+      "dev": "अन्नं ब्रह्मेति व्यजानात्",
+      "translit": "Annaṁ Brahmeti Vyajānāt",
+      "trans": "He knew food to be Brahman — the source of all that is.",
+      "source": "Taittirīya Upaniṣad, III.2"
+    },
+    {
+      "key": "ayur",
+      "dev": "आयुर्घृतम्",
+      "translit": "Āyur Ghṛtam",
+      "trans": "Ghee is life itself — longevity, vigour, vitality.",
+      "source": "Charaka Saṁhitā, Sūtrasthāna XXVII.231"
+    },
+    {
+      "key": "ahimsa",
+      "dev": "सर्वे भवन्तु सुखिनः",
+      "translit": "Sarve Bhavantu Sukhinaḥ",
+      "trans": "May all beings be happy, may all be free from illness.",
+      "source": "Bṛhadāraṇyaka Upaniṣad"
+    }
+  ]
+}
