@@ -1,0 +1,21 @@
+{
+  "name": "@ghritam/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./styles/*": "./src/styles/*",
+    "./*.astro": "./src/components/*.astro",
+    "./*.svelte": "./src/components/*.svelte"
+  },
+  "peerDependencies": {
+    "astro": "^5.0.0",
+    "svelte": "^5.0.0"
+  },
+  "dependencies": {
+    "@ghritam/commerce": "workspace:*"
+  },
+  "devDependencies": {
+    "svelte": "^5.55.9"
+  }
+}

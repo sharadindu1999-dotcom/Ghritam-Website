@@ -1,0 +1,20 @@
+{
+  "name": "ghritam",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.13.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter storefront dev",
+    "build": "pnpm --filter storefront build",
+    "preview": "pnpm --filter storefront preview",
+    "test": "pnpm --filter @ghritam/commerce test",
+    "check": "pnpm --filter storefront check"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

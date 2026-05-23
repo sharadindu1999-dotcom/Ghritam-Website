@@ -1,0 +1,41 @@
+{
+  "name": "storefront",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "db:migrate": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@ghritam/commerce": "workspace:*",
+    "@ghritam/ui": "workspace:*",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.50",
+    "astro": "^5.18.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/cloudflare": "^12.6.13",
+    "@astrojs/svelte": "^7.2.5",
+    "@cloudflare/workers-types": "^4.20260522.1",
+    "@fontsource/caveat": "^5.2.5",
+    "@fontsource/cormorant-garamond": "^5.2.5",
+    "@fontsource/jetbrains-mono": "^5.2.5",
+    "@fontsource/tiro-devanagari-sanskrit": "^5.2.5",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^25.9.1",
+    "svelte": "^5.55.9",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.7.3",
+    "wrangler": "^4.94.0"
+  }
+}

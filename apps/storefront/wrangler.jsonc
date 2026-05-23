@@ -1,0 +1,17 @@
+{
+  // Cloudflare bindings for the Ghritam storefront.
+  // Local dev uses a SQLite file under .wrangler/; for production, run
+  //   wrangler d1 create ghritam
+  // and paste the returned database_id below.
+  "name": "ghritam-storefront",
+  "compatibility_date": "2025-05-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ghritam",
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ]
+}
