@@ -65,23 +65,16 @@ the buyer closes the tab before the in-page verification runs.
 `/keystatic` is the editing UI. In production it uses GitHub storage; locally
 it writes to the working tree.
 
-### Front-door gate (Basic Auth)
+Keystatic runs in **GitHub storage mode in both dev and production**. The
+only way into the admin is to log in with a GitHub account that the
+project's GitHub App is installed on; nobody else can read or write
+anything. There is no separate local-edits path — your dev edits commit to
+the real repo, same as prod.
 
-Keystatic's GitHub storage gates *writes* — only people the GitHub App is
-installed on can commit. The admin UI itself is publicly viewable. To make
-`/keystatic` private end-to-end, set both:
-
-- `KEYSTATIC_BASIC_USER`
-- `KEYSTATIC_BASIC_PASSWORD`
-
-as Cloudflare Pages env vars (or in `.dev.vars` locally). When both are set,
-visiting `/keystatic` (and any `/api/keystatic/*` call) triggers a browser
-Basic-Auth prompt. Edge middleware in `src/middleware.ts` enforces it. Leave
-either empty to disable the gate.
-
-> Multiple editors / SSO? Replace this with a **Cloudflare Access** policy
-> on `/keystatic*` (free for up to 50 users) — same effect, with GitHub /
-> Google / one-time-PIN logins per user.
+> Want stricter URL-level gating (e.g. don't even show the GitHub login
+> screen to outsiders)? Put a **Cloudflare Access** policy in front of
+> `/keystatic*` — free for up to 50 users, GitHub / Google / one-time-PIN
+> login per user, no shared secrets.
 
 ### One-time setup (Keystatic GitHub App)
 

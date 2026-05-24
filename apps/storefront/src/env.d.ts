@@ -7,9 +7,6 @@ interface CloudflareEnv {
   GITHUB_WEBHOOK_SECRET?: string;
   SYNC_SECRET?: string;
   KEYSTATIC_REPO?: string;
-  /** Basic-Auth gate for /keystatic + /api/keystatic. Both must be set. */
-  KEYSTATIC_BASIC_USER?: string;
-  KEYSTATIC_BASIC_PASSWORD?: string;
   GITHUB_TOKEN?: string;
   CONTENT_REF?: string;
   CF_API_TOKEN?: string;

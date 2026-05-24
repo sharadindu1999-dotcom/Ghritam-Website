@@ -8,17 +8,19 @@ import { BrandMark } from './src/keystatic/brand';
  * GitHub webhook then syncs it into Cloudflare D1, which the storefront reads
  * at the edge. siteConfig and journal stay build-time.
  *
- * Storage: local filesystem in dev, GitHub in production. Set the repo via the
- * KEYSTATIC_REPO env var ("owner/name").
+ * Storage: GitHub in **both** dev and prod, so the GitHub App's OAuth login
+ * is the only way in either environment. Every save is a real commit on the
+ * configured repo; nobody who isn't a member of the GitHub App's installation
+ * can edit anything, and there is no separate "local edits" path. Set the
+ * repo via the KEYSTATIC_REPO env var ("owner/name").
  */
 const repo = (import.meta.env?.KEYSTATIC_REPO ?? 'your-org/ghritam') as `${string}/${string}`;
 
-// Storefront origin used for "Preview" buttons. In production set
-// PUBLIC_SITE_URL to your deployed origin; the localhost default works in dev.
+// Storefront origin used for "Preview" buttons.
 const site = (import.meta.env?.PUBLIC_SITE_URL ?? 'http://localhost:4321').replace(/\/$/, '');
 
 export default config({
-  storage: import.meta.env?.PROD ? { kind: 'github', repo } : { kind: 'local' },
+  storage: { kind: 'github', repo },
   ui: {
     brand: { name: 'Ghritam', mark: BrandMark },
     navigation: {
