@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /keystatic
+Disallow: /keystatic/
+Disallow: /api/
+Disallow: /checkout
+
+Sitemap: https://ghritam.pages.dev/sitemap-index.xml
