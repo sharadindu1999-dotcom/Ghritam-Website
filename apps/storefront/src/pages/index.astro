@@ -2,6 +2,7 @@
 import { getCatalog, shlokas, formatPriceRange } from '@ghritam/commerce';
 import { getDB } from '../lib/db';
 import { latestJournal } from '../lib/journal';
+import { collectionPageJsonLd } from '../lib/seo';
 import Layout from '../layouts/Layout.astro';
 import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
@@ -17,9 +18,21 @@ export const prerender = false;
 const products = await getCatalog(getDB(Astro.locals));
 const featured = latestJournal();
 Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-revalidate=300');
+
+const siteUrl = (Astro.site ?? new URL('https://ghritam.pages.dev')).origin;
+const homeJsonLd = collectionPageJsonLd({
+  name: 'Ghritam — four foods from the village',
+  description:
+    'A2 bilona ghee, raw forest honey, Kinnauri kishmish, Kashmiri walnuts. Whole foods sourced directly from village makers.',
+  url: `${siteUrl}/`,
+  items: products.map((p) => ({ name: p.name, url: `${siteUrl}/foods/${p.slug}` })),
+});
 ---
 
-<Layout title="Ghritam">
+<Layout
+  title="Ghritam"
+  description="Four whole foods sourced directly from village makers — A2 bilona ghee, raw forest honey, Kinnauri kishmish, Kashmiri walnuts. Unfortified, unprocessed, alive."
+  jsonLd={homeJsonLd}>
   <TopNav active="Home" variant="minimal" />
 
   {/* ── Hero — asymmetric: giant wordmark left, manifesto + shloka right ── */}

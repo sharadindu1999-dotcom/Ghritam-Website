@@ -4,11 +4,24 @@ import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
 import OrnamentalRule from '@ghritam/ui/OrnamentalRule.astro';
 import { listJournal } from '../../lib/journal';
+import { collectionPageJsonLd } from '../../lib/seo';
 
 const entries = listJournal();
+
+const siteUrl = (Astro.site ?? new URL('https://ghritam.pages.dev')).origin;
+const journalJsonLd = collectionPageJsonLd({
+  name: 'Journal · Ghritam',
+  description:
+    'Notes on food, terroir, and the body — essays from Ghritam on why whole food still matters.',
+  url: `${siteUrl}/journal`,
+  items: entries.map((e) => ({ name: e.title, url: `${siteUrl}/journal/${e.slug}` })),
+});
 ---
 
-<Layout title="Journal" description="Essays from Ghritam — on food, terroir and the body.">
+<Layout
+  title="Journal"
+  description="Essays from Ghritam — on food, terroir, the body, and why the lab has not (and perhaps cannot) replace what a fruit does to a body."
+  jsonLd={journalJsonLd}>
   <TopNav active="Journal" variant="minimal" />
 
   <header class="border-b border-ink px-5 pb-6 pt-8 md:px-10 lg:px-14 lg:pb-7 lg:pt-10">

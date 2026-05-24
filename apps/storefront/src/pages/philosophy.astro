@@ -3,11 +3,25 @@ import Layout from '../layouts/Layout.astro';
 import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
 import PahadiFrieze from '@ghritam/ui/PahadiFrieze.astro';
+import { BRAND } from '../lib/seo';
+
+const siteUrl = (Astro.site ?? new URL('https://ghritam.pages.dev')).origin;
+const aboutJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: 'Why we started Ghritam',
+  description:
+    'A letter from the founder — on natural food, terroir, and the difference between a nutrient and a meal.',
+  url: `${siteUrl}/philosophy`,
+  inLanguage: 'en',
+  about: { '@type': 'Organization', name: BRAND.name, url: siteUrl },
+};
 ---
 
 <Layout
   title="Philosophy"
-  description="Why we started Ghritam — a letter from the founder.">
+  description="A letter from the founder — on natural food, terroir, and why the lab has not (and perhaps cannot) replace what a fruit does to a body."
+  jsonLd={aboutJsonLd}>
   <TopNav active="Philosophy" variant="minimal" />
 
   {/* ── Header ── */}

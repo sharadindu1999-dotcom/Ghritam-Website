@@ -1,6 +1,7 @@
 ---
 import { getProductBySlug, formatINR } from '@ghritam/commerce';
 import { getDB } from '../../lib/db';
+import { breadcrumbJsonLd, productJsonLd } from '../../lib/seo';
 import Layout from '../../layouts/Layout.astro';
 import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
@@ -21,9 +22,22 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-re
 // "Add to cart" arrive as a Svelte island in Phase 3.
 const variant = product.variants[0]!;
 const thumbs = ['the label', 'the source', 'the making', 'on the table'];
+
+const siteUrl = (Astro.site ?? new URL('https://ghritam.pages.dev')).origin;
+const productSchema = productJsonLd(product, siteUrl);
+const crumbs = breadcrumbJsonLd([
+  { name: 'Home', url: `${siteUrl}/` },
+  { name: 'Our Foods', url: `${siteUrl}/foods` },
+  { name: product.name },
+]);
 ---
 
-<Layout title={product.name} description={product.origin}>
+<Layout
+  title={product.name}
+  description={`${product.origin}. ${product.note}`}
+  ogType="product"
+  ogImage={product.imagePath ?? '/favicon.svg'}
+  jsonLd={[productSchema, crumbs]}>
   <TopNav active="Our Foods" variant="minimal" />
 
   {/* ── Breadcrumb ── */}

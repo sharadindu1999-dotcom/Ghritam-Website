@@ -1,6 +1,7 @@
 ---
 import { getCatalog, formatPriceRange } from '@ghritam/commerce';
 import { getDB } from '../../lib/db';
+import { collectionPageJsonLd } from '../../lib/seo';
 import Layout from '../../layouts/Layout.astro';
 import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
@@ -18,9 +19,21 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-re
 // Phase 1: the filter / sort controls are static. They become interactive in
 // Phase 2 once the catalog is served from D1.
 const filters = ['All', 'Dairy', 'Apiary', 'Mountain', 'In season'];
+
+const siteUrl = (Astro.site ?? new URL('https://ghritam.pages.dev')).origin;
+const foodsJsonLd = collectionPageJsonLd({
+  name: 'Our Foods · Ghritam',
+  description:
+    `Ghritam's full catalog — ${products.length} whole foods sourced directly from village makers across Bhārata.`,
+  url: `${siteUrl}/foods`,
+  items: products.map((p) => ({ name: p.name, url: `${siteUrl}/foods/${p.slug}` })),
+});
 ---
 
-<Layout title="Our Foods" description="Everything Ghritam carries, on one page.">
+<Layout
+  title="Our Foods"
+  description="The whole Ghritam catalog on one page — A2 bilona ghee, raw forest honey, Kinnauri kishmish, Kashmiri walnuts. Sourced directly from village makers."
+  jsonLd={foodsJsonLd}>
   <TopNav active="Our Foods" variant="minimal" />
 
   {/* ── Header strip ── */}
