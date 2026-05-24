@@ -130,7 +130,7 @@ export default config({
       label: 'Journal',
       slugField: 'title',
       path: 'content/journal/*/',
-      format: { contentField: 'content', data: 'json' },
+      format: { contentField: 'content' },
       columns: ['title', 'publishedDate'],
       schema: {
         title: fields.slug({ name: { label: 'Title' } }),

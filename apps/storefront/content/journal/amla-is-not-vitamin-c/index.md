@@ -1,3 +1,14 @@
+---
+title: 'If amla is only Vitamin C, why did nature bother with a tree?'
+devSeed: आम्र
+excerpt: >
+  A short essay on why the lab has not — and perhaps cannot — replace what a
+  fruit does to a body. On terroir in the plant world, and the difference
+  between a nutrient and a meal.
+readingTime: 7
+publishedDate: 2026-05-15
+---
+
 A jar of Vitamin C tablets and a wild amla cost about the same. The factory will tell you they are equivalent. Your grandmother will tell you they are not. Both of them, in their way, are correct.
 
 The tablet contains ascorbic acid. So does the fruit. If "vitamin C" were the whole story, the question would end here. But the amla also contains tannins, polyphenols, pectin, fibre, water held in a particular way, sugars in a particular ratio, a sourness that asks your body to make saliva, a texture that asks your jaw to work. The fruit arrives with an entire small ecosystem; the tablet arrives with one number on a label.
