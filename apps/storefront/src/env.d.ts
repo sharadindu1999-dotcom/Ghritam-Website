@@ -17,7 +17,6 @@ interface CloudflareEnv {
   RAZORPAY_WEBHOOK_SECRET?: string;
   RESEND_API_KEY?: string;
   ORDER_EMAIL_FROM?: string;
-  PUBLIC_RAZORPAY_KEY_ID?: string;
 }
 
 type CloudflareRuntime = import('@astrojs/cloudflare').Runtime<CloudflareEnv>;
