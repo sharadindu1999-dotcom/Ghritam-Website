@@ -10,10 +10,10 @@ import { config, fields, collection, singleton } from '@keystatic/core';
  * Storage: local filesystem in dev, GitHub in production. Set the repo via the
  * KEYSTATIC_REPO env var ("owner/name").
  */
-const repo = (import.meta.env.KEYSTATIC_REPO ?? 'your-org/ghritam') as `${string}/${string}`;
+const repo = (import.meta.env?.KEYSTATIC_REPO ?? 'your-org/ghritam') as `${string}/${string}`;
 
 export default config({
-  storage: import.meta.env.PROD ? { kind: 'github', repo } : { kind: 'local' },
+  storage: import.meta.env?.PROD ? { kind: 'github', repo } : { kind: 'local' },
   ui: {
     brand: { name: 'Ghritam' },
     navigation: {
@@ -27,7 +27,7 @@ export default config({
     products: collection({
       label: 'Products',
       slugField: 'name',
-      path: 'content/products/*',
+      path: 'content/products/*/',
       format: { data: 'json' },
       columns: ['name', 'category'],
       schema: {
@@ -90,7 +90,7 @@ export default config({
     discounts: collection({
       label: 'Discounts',
       slugField: 'code',
-      path: 'content/discounts/*',
+      path: 'content/discounts/*/',
       format: { data: 'json' },
       columns: ['code', 'type'],
       schema: {
@@ -129,7 +129,7 @@ export default config({
     journal: collection({
       label: 'Journal',
       slugField: 'title',
-      path: 'content/journal/*',
+      path: 'content/journal/*/',
       format: { contentField: 'content' },
       columns: ['title', 'publishedDate'],
       schema: {
@@ -146,7 +146,7 @@ export default config({
   singletons: {
     siteConfig: singleton({
       label: 'Site configuration',
-      path: 'content/site-config',
+      path: 'content/site-config/',
       format: { data: 'json' },
       schema: {
         brandDev: fields.text({ label: 'Wordmark (Devanagari)', defaultValue: 'घृतम्' }),
