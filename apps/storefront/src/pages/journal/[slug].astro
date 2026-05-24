@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TopNav from '@ghritam/ui/TopNav.astro';
+import Footer from '@ghritam/ui/Footer.astro';
+import OrnamentalRule from '@ghritam/ui/OrnamentalRule.astro';
+import { listJournal, getJournal } from '../../lib/journal';
+
+export function getStaticPaths() {
+  return listJournal().map((e) => ({ params: { slug: e.slug } }));
+}
+
+const { slug } = Astro.params;
+const entry = getJournal(slug!);
+if (!entry) return Astro.redirect('/journal');
+---
+
+<Layout title={entry.title} description={entry.excerpt}>
+  <TopNav active="Journal" variant="minimal" />
+
+  <nav class="px-5 pt-5 font-mono text-xs uppercase text-ink-3 md:px-10 lg:px-[60px]" style="letter-spacing:0.18em">
+    <a href="/">Home</a> / <a href="/journal">Journal</a> /
+    <span class="text-ink">Essay</span>
+  </nav>
+
+  <header class="px-5 pb-5 pt-8 text-center md:px-10 lg:px-40 lg:pt-12">
+    <div class="font-dev text-accent" style="font-size:clamp(36px,7vw,56px)">{entry.devSeed}</div>
+    <h1 class="mt-2 font-serif italic" style="font-size:clamp(28px,5vw,44px);line-height:1.15">
+      {entry.title}
+    </h1>
+    <div class="mt-4 font-mono text-xs uppercase text-ink-3" style="letter-spacing:0.3em">
+      {entry.publishedDate ? `${entry.publishedDate} · ` : ''}{entry.readingTime} min read
+    </div>
+  </header>
+
+  <div class="mx-5 my-6 md:mx-10 lg:mx-[200px]"><OrnamentalRule /></div>
+
+  <article class="prose-journal px-5 pb-12 md:px-10 lg:px-[200px]" set:html={entry.html}></article>
+
+  <Footer topRule />
+</Layout>
+
+<style is:global>
+  /* Brand-matched typography for markdoc-rendered journal bodies. */
+  .prose-journal {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+  .prose-journal p { margin: 0 0 18px; color: var(--color-ink-2); }
+  .prose-journal p:first-of-type::first-letter {
+    font-family: var(--font-dev);
+    color: var(--color-accent);
+    font-size: 54px;
+    float: left;
+    line-height: 0.85;
+    padding-right: 8px;
+  }
+  .prose-journal h2 {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(24px, 3.5vw, 32px);
+    color: var(--color-ink);
+    margin: 32px 0 14px;
+    line-height: 1.2;
+  }
+  .prose-journal h3 {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--color-ink);
+    margin: 24px 0 10px;
+  }
+  .prose-journal em { font-style: italic; }
+  .prose-journal strong { font-weight: 600; color: var(--color-ink); }
+  .prose-journal a {
+    color: inherit;
+    border-bottom: 1px solid var(--color-ink);
+    padding-bottom: 1px;
+  }
+  .prose-journal a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+  .prose-journal blockquote {
+    border-left: 2px solid var(--color-accent);
+    margin: 22px 0;
+    padding: 4px 18px;
+    font-style: italic;
+    color: var(--color-ink-2);
+  }
+  .prose-journal ul, .prose-journal ol { margin: 0 0 18px 22px; color: var(--color-ink-2); }
+  .prose-journal li { margin-bottom: 6px; }
+  .prose-journal hr {
+    border: 0;
+    border-top: 1px solid var(--color-ink);
+    margin: 32px 0;
+  }
+</style>

@@ -16,7 +16,7 @@
     { label: 'Home', href: '/' },
     { label: 'Philosophy', href: '/philosophy' },
     { label: 'Our Foods', href: '/foods' },
-    { label: 'Journal', href: '/#journal' },
+    { label: 'Journal', href: '/journal' },
   ];
 
   function close() {
