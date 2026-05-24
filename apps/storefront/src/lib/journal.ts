@@ -12,6 +12,7 @@
  */
 import Markdoc from '@markdoc/markdoc';
 import { parse as parseYAML } from 'yaml';
+import { markdocConfig } from './markdoc-config';
 
 interface JournalFrontmatter {
   title: string;
@@ -58,7 +59,7 @@ function slugFromPath(path: string): string {
 
 function renderMarkdoc(body: string): string {
   const ast = Markdoc.parse(body);
-  const tree = Markdoc.transform(ast);
+  const tree = Markdoc.transform(ast, markdocConfig);
   return Markdoc.renderers.html(tree);
 }
 

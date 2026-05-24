@@ -67,6 +67,8 @@ export interface Product {
   maker: Maker;
   /** Key of the shloka (in siteConfig) that anchors this product. */
   shlokaKey: string;
+  /** Public URL to the product photo, e.g. /uploads/products/ghee.jpg. Undefined when no image has been uploaded — the storefront then renders the hatched placeholder. */
+  imagePath?: string;
   /** At least one variant. The first is treated as the default. */
   variants: Variant[];
   /** Short trust marks, e.g. ["A2 Gir cows", "Hand-churned", "Unpasteurised"]. */

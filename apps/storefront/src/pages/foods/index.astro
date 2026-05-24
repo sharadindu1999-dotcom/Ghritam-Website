@@ -4,7 +4,7 @@ import { getDB } from '../../lib/db';
 import Layout from '../../layouts/Layout.astro';
 import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
-import Placeholder from '@ghritam/ui/Placeholder.astro';
+import ProductImage from '@ghritam/ui/ProductImage.astro';
 import Button from '@ghritam/ui/Button.astro';
 import PhadFrieze from '@ghritam/ui/PhadFrieze.astro';
 
@@ -70,7 +70,12 @@ const filters = ['All', 'Dairy', 'Apiary', 'Mountain', 'In season'];
           </div>
         </div>
         <a href={`/foods/${p.slug}`}>
-          <Placeholder label={p.id} class="h-[180px] lg:h-[120px]" />
+          <ProductImage
+            src={p.imagePath}
+            alt={p.name}
+            placeholderLabel={p.id}
+            class="h-[180px] lg:h-[120px]"
+          />
         </a>
         <div>
           <a

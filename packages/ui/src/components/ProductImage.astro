@@ -1,0 +1,45 @@
+---
+import Placeholder from './Placeholder.astro';
+
+/**
+ * Product photo with a graceful fallback. Renders the uploaded image when
+ * one exists; otherwise renders the system's hatched `.ph` placeholder
+ * with the brand's manuscript styling.
+ */
+interface Props {
+  src?: string | null;
+  alt: string;
+  /** Label shown on the hatched placeholder when no image is set. */
+  placeholderLabel?: string;
+  placeholderSublabel?: string;
+  /** Sizing classes applied to both the image and the placeholder. */
+  class?: string;
+  variant?: 'default' | 'light' | 'dark' | 'accent';
+}
+const {
+  src,
+  alt,
+  placeholderLabel,
+  placeholderSublabel,
+  class: className,
+  variant = 'default',
+} = Astro.props;
+---
+
+{
+  src ? (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      class:list={['block w-full border border-ink object-cover', className]}
+    />
+  ) : (
+    <Placeholder
+      label={placeholderLabel ?? alt}
+      sublabel={placeholderSublabel}
+      class={className}
+      variant={variant}
+    />
+  )
+}

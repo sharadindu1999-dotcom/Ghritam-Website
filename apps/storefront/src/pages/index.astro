@@ -7,6 +7,7 @@ import TopNav from '@ghritam/ui/TopNav.astro';
 import Footer from '@ghritam/ui/Footer.astro';
 import ShlokaBlock from '@ghritam/ui/ShlokaBlock.astro';
 import Placeholder from '@ghritam/ui/Placeholder.astro';
+import ProductImage from '@ghritam/ui/ProductImage.astro';
 import Button from '@ghritam/ui/Button.astro';
 import PhadFrieze from '@ghritam/ui/PhadFrieze.astro';
 
@@ -150,7 +151,13 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=30, stale-while-re
             </div>
             <div class="font-dev leading-none" style="font-size:32px">{p.dev}</div>
           </div>
-          <Placeholder label={p.id} variant="light" class="h-[140px]" />
+          <ProductImage
+            src={p.imagePath}
+            alt={p.name}
+            placeholderLabel={p.id}
+            variant="light"
+            class="h-[140px]"
+          />
           <div class="mt-3.5 font-serif italic leading-tight" style="font-size:22px">
             {p.name}
           </div>

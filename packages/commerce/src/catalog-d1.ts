@@ -24,6 +24,7 @@ interface ProductRow {
   maker_blurb: string;
   badges: string;
   sort_order: number;
+  image_path: string | null;
 }
 
 interface VariantRow {
@@ -51,6 +52,7 @@ function rowToProduct(p: ProductRow, variantsBySlug: Map<string, Variant[]>): Pr
     shlokaKey: p.shloka_key,
     variants: variantsBySlug.get(p.slug) ?? [],
     badges: safeJsonArray(p.badges),
+    imagePath: p.image_path ?? undefined,
   };
 }
 

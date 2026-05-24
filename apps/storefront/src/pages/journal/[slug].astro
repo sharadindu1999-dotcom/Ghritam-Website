@@ -92,4 +92,60 @@ if (!entry) return Astro.redirect('/journal');
     border-top: 1px solid var(--color-ink);
     margin: 32px 0;
   }
+
+  /* Custom markdoc tags: {% shloka key="..." /%} and {% ornament /%} */
+  .prose-journal .shloka-block {
+    margin: 28px 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-ink-3);
+  }
+  .prose-journal .shloka-block__dev {
+    font-family: var(--font-dev);
+    color: var(--color-ink);
+    font-size: clamp(36px, 6vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .prose-journal .shloka-block__translit {
+    margin-top: 10px;
+    font-style: italic;
+    color: var(--color-ink-2);
+    font-size: 17px;
+  }
+  .prose-journal .shloka-block__trans {
+    margin: 10px 0 0;
+    font-style: italic;
+    color: var(--color-ink-2);
+    font-size: 15px;
+    max-width: 460px;
+  }
+  .prose-journal .shloka-block__source {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-style: normal;
+    color: var(--color-ink-3);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+  }
+  /* drop-cap rule only applies to plain p's, not to the shloka */
+  .prose-journal .shloka-block p::first-letter { font-family: inherit; color: inherit; font-size: inherit; float: none; padding: 0; }
+
+  .prose-journal .ornamental-rule {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0;
+    color: var(--color-ink);
+  }
+  .prose-journal .ornamental-rule__line {
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+  }
+  .prose-journal .ornamental-rule__diamond {
+    width: 6px;
+    height: 6px;
+    transform: rotate(45deg);
+    background: currentColor;
+  }
 </style>

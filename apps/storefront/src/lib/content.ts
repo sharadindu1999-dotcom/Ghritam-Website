@@ -20,10 +20,14 @@ interface ProductJson {
   note: string;
   inSeason: boolean;
   shlokaKey: string;
+  /** Filename only — Keystatic stores the file under public/uploads/products. */
+  image?: string | null;
   maker: { name: string; place: string; blurb: string };
   badges: string[];
   variants: { sku: string; label: string; price: number; batch: string; stock: number }[];
 }
+
+const PRODUCT_IMAGE_PREFIX = '/uploads/products/';
 
 interface DiscountJson {
   type: 'percent' | 'flat';
@@ -51,6 +55,7 @@ function productFromJson(slug: string, j: ProductJson): Product {
     shlokaKey: j.shlokaKey,
     badges: j.badges ?? [],
     variants: j.variants ?? [],
+    imagePath: j.image ? `${PRODUCT_IMAGE_PREFIX}${j.image}` : undefined,
   };
 }
 

@@ -21,8 +21,8 @@ export interface SyncResult {
 
 const INSERT_PRODUCT = `INSERT INTO products
   (slug, handle, name, dev, category, origin, story, note, in_season,
-   shloka_key, maker_name, maker_place, maker_blurb, badges, sort_order)
-  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+   shloka_key, maker_name, maker_place, maker_blurb, badges, sort_order, image_path)
+  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
 
 const INSERT_VARIANT = `INSERT INTO variants
   (sku, product_slug, label, price, batch, stock, sort_order)
@@ -66,6 +66,7 @@ export async function syncCatalogToD1(
           p.maker.blurb,
           JSON.stringify(p.badges),
           pi,
+          p.imagePath ?? null,
         ),
     );
     p.variants.forEach((v, vi) => {
