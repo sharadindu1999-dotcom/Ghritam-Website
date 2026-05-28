@@ -15,7 +15,10 @@ interface CloudflareEnv {
   RAZORPAY_KEY_ID?: string;
   RAZORPAY_KEY_SECRET?: string;
   RAZORPAY_WEBHOOK_SECRET?: string;
-  RESEND_API_KEY?: string;
+  // AWS SES — order confirmation email
+  AWS_ACCESS_KEY_ID?: string;
+  AWS_SECRET_ACCESS_KEY?: string;
+  AWS_REGION?: string;
   ORDER_EMAIL_FROM?: string;
 }
 

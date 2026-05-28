@@ -1,11 +1,16 @@
 /**
- * Order confirmation email via Resend.
+ * Order confirmation email via AWS SES (SESv2 SendEmail).
  *
- * Best-effort: returns `false` (never throws) when Resend is not configured or
+ * Best-effort: returns `false` (never throws) when SES is not configured or
  * the call fails, so a flaky email never blocks a paid order from completing.
+ *
+ * SES requires the From address to be a verified identity (single address or
+ * a domain). Set `ORDER_EMAIL_FROM` to a verified sender; without it (or the
+ * AWS keys / region) this function no-ops.
  */
 import { formatINR } from '@ghritam/commerce';
 import type { OrderRow } from '@ghritam/commerce';
+import { signAwsRequest } from './aws-sigv4';
 
 interface StoredItem {
   name: string;
@@ -18,9 +23,16 @@ export async function sendOrderEmail(
   env: Partial<CloudflareEnv>,
   order: OrderRow,
 ): Promise<boolean> {
-  if (!env.RESEND_API_KEY || !order.email) return false;
+  if (
+    !env.AWS_ACCESS_KEY_ID ||
+    !env.AWS_SECRET_ACCESS_KEY ||
+    !env.AWS_REGION ||
+    !env.ORDER_EMAIL_FROM ||
+    !order.email
+  ) {
+    return false;
+  }
 
-  const from = env.ORDER_EMAIL_FROM ?? 'Ghritam <onboarding@resend.dev>';
   let items: StoredItem[] = [];
   try {
     items = JSON.parse(order.items) as StoredItem[];
@@ -49,19 +61,32 @@ export async function sendOrderEmail(
     .filter(Boolean)
     .join('\n');
 
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        'content-type': 'application/json',
+  const body = JSON.stringify({
+    FromEmailAddress: env.ORDER_EMAIL_FROM,
+    Destination: { ToAddresses: [order.email] },
+    Content: {
+      Simple: {
+        Subject: { Data: `Ghritam · order ${order.id} confirmed`, Charset: 'UTF-8' },
+        Body: { Text: { Data: text, Charset: 'UTF-8' } },
       },
-      body: JSON.stringify({
-        from,
-        to: order.email,
-        subject: `Ghritam · order ${order.id} confirmed`,
-        text,
-      }),
+    },
+  });
+
+  try {
+    const signed = await signAwsRequest({
+      method: 'POST',
+      url: `https://email.${env.AWS_REGION}.amazonaws.com/v2/email/outbound-emails`,
+      region: env.AWS_REGION,
+      service: 'ses',
+      accessKeyId: env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+      body,
+      contentType: 'application/json',
+    });
+    const res = await fetch(signed.url, {
+      method: signed.method,
+      headers: signed.headers,
+      body: signed.body,
     });
     return res.ok;
   } catch {
