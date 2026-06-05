@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Test (commerce)
+        run: pnpm --filter @ghritam/commerce test
+
+      - name: Type-check (storefront)
+        run: pnpm --filter storefront check
+
+      - name: Build (storefront)
+        env:
+          # Build-time PUBLIC_* vars baked into the client bundle. Defaults
+          # keep forked-PR builds green even when the fork can't read repo vars.
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL || 'https://ghritam.pages.dev' }}
+          PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: ${{ vars.PUBLIC_KEYSTATIC_GITHUB_APP_SLUG }}
+          KEYSTATIC_REPO: ${{ github.repository }}
+        run: pnpm --filter storefront build

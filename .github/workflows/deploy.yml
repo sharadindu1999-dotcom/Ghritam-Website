@@ -1,0 +1,113 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      PROJECT_NAME: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 1. Apply pending D1 migrations to the production database first, so
+      #    a fresh deploy can rely on the new schema being present.
+      - name: Apply D1 migrations (remote)
+        run: pnpm --filter storefront db:migrate:remote
+
+      # 2. Sync runtime secrets from GitHub -> Cloudflare Pages. Idempotent.
+      #    We build the JSON file with Node (not heredoc) so values containing
+      #    quotes/backslashes serialise correctly.
+      - name: Build Pages secrets file
+        env:
+          KEYSTATIC_SECRET: ${{ secrets.KEYSTATIC_SECRET }}
+          KEYSTATIC_GITHUB_CLIENT_ID: ${{ secrets.KEYSTATIC_GITHUB_CLIENT_ID }}
+          KEYSTATIC_GITHUB_CLIENT_SECRET: ${{ secrets.KEYSTATIC_GITHUB_CLIENT_SECRET }}
+          # GitHub forbids custom secrets starting with GITHUB_; we rename on upload.
+          PAGES_GITHUB_TOKEN: ${{ secrets.KEYSTATIC_GITHUB_TOKEN }}
+          PAGES_GITHUB_WEBHOOK_SECRET: ${{ secrets.GH_WEBHOOK_SECRET }}
+          SYNC_SECRET: ${{ secrets.SYNC_SECRET }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          RAZORPAY_KEY_ID: ${{ secrets.RAZORPAY_KEY_ID }}
+          RAZORPAY_KEY_SECRET: ${{ secrets.RAZORPAY_KEY_SECRET }}
+          RAZORPAY_WEBHOOK_SECRET: ${{ secrets.RAZORPAY_WEBHOOK_SECRET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          ORDER_EMAIL_FROM: ${{ vars.ORDER_EMAIL_FROM }}
+          CONTENT_REF: ${{ vars.CONTENT_REF || github.ref_name }}
+          KEYSTATIC_REPO: ${{ github.repository }}
+        run: |
+          node -e "
+            const e = process.env;
+            const out = {
+              KEYSTATIC_SECRET:                e.KEYSTATIC_SECRET ?? '',
+              KEYSTATIC_REPO:                  e.KEYSTATIC_REPO ?? '',
+              KEYSTATIC_GITHUB_CLIENT_ID:      e.KEYSTATIC_GITHUB_CLIENT_ID ?? '',
+              KEYSTATIC_GITHUB_CLIENT_SECRET:  e.KEYSTATIC_GITHUB_CLIENT_SECRET ?? '',
+              GITHUB_TOKEN:                    e.PAGES_GITHUB_TOKEN ?? '',
+              GITHUB_WEBHOOK_SECRET:           e.PAGES_GITHUB_WEBHOOK_SECRET ?? '',
+              SYNC_SECRET:                     e.SYNC_SECRET ?? '',
+              CONTENT_REF:                     e.CONTENT_REF ?? 'main',
+              CF_API_TOKEN:                    e.CF_API_TOKEN ?? '',
+              CF_ZONE_ID:                      e.CF_ZONE_ID ?? '',
+              RAZORPAY_KEY_ID:                 e.RAZORPAY_KEY_ID ?? '',
+              RAZORPAY_KEY_SECRET:             e.RAZORPAY_KEY_SECRET ?? '',
+              RAZORPAY_WEBHOOK_SECRET:         e.RAZORPAY_WEBHOOK_SECRET ?? '',
+              AWS_ACCESS_KEY_ID:               e.AWS_ACCESS_KEY_ID ?? '',
+              AWS_SECRET_ACCESS_KEY:           e.AWS_SECRET_ACCESS_KEY ?? '',
+              AWS_REGION:                      e.AWS_REGION ?? '',
+              ORDER_EMAIL_FROM:                e.ORDER_EMAIL_FROM ?? '',
+            };
+            require('fs').writeFileSync('${{ runner.temp }}/pages-secrets.json', JSON.stringify(out));
+          "
+
+      - name: Push Pages secrets to Cloudflare
+        working-directory: apps/storefront
+        run: |
+          pnpm exec wrangler pages secret bulk "${{ runner.temp }}/pages-secrets.json" \
+            --project-name "$PROJECT_NAME"
+
+      # 3. Build with the build-time PUBLIC_* vars in scope so Vite bakes them in.
+      - name: Build
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+          PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: ${{ vars.PUBLIC_KEYSTATIC_GITHUB_APP_SLUG }}
+          KEYSTATIC_REPO: ${{ github.repository }}
+        run: pnpm --filter storefront build
+
+      # 4. Publish.
+      - name: Deploy to Cloudflare Pages
+        working-directory: apps/storefront
+        run: |
+          pnpm exec wrangler pages deploy dist \
+            --project-name "$PROJECT_NAME" \
+            --branch main \
+            --commit-hash "${{ github.sha }}"
