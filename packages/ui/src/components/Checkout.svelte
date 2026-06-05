@@ -1,7 +1,7 @@
 <script lang="ts">
   /**
    * Checkout island — order summary, customer form, discount code, and the
-   * Razorpay hosted-widget flow. Prices shown here are indicative; the server
+   * hosted payment-widget flow. Prices shown here are indicative; the server
    * re-prices in /api/checkout/create-order and that is what is charged.
    */
   import { cart, clearCart } from '../lib/cartStore';
@@ -16,7 +16,7 @@
   const subtotal = $derived(cartSubtotal($cart));
 
   // Customer fields — basic contact + shipping address only. No payment data
-  // is collected here; card/UPI entry happens inside the Razorpay widget.
+  // is collected here; card/UPI entry happens inside the hosted payment widget.
   let name = $state('');
   let email = $state('');
   let phone = $state('');
@@ -32,7 +32,7 @@
       const s = document.createElement('script');
       s.src = 'https://checkout.razorpay.com/v1/checkout.js';
       s.onload = () => resolve();
-      s.onerror = () => reject(new Error('Could not reach Razorpay.'));
+      s.onerror = () => reject(new Error('Could not reach the payment provider.'));
       document.head.appendChild(s);
     });
   }
@@ -201,11 +201,11 @@
         disabled={stage === 'paying'}
         class="mt-7 w-full cursor-pointer border border-ink bg-ink py-4 font-mono text-sm uppercase tracking-wide text-paper transition-colors hover:bg-ink-2 disabled:opacity-50"
       >
-        {stage === 'paying' ? 'One moment…' : `Pay with Razorpay · ${formatINR(subtotal)}`}
+        {stage === 'paying' ? 'One moment…' : `Pay securely · ${formatINR(subtotal)}`}
       </button>
       <p class="mt-2.5 font-serif italic text-ink-3" style="font-size:12px">
         Final total — including any discount — is confirmed on the next screen.
-        Card and UPI details are entered securely with Razorpay; we never see them.
+        Card and UPI details are entered through a secure payment widget; we never see them.
       </p>
     </form>
 
